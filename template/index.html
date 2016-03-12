@@ -24,7 +24,7 @@ $(document).ready(function(){
     <body>
         <div id="wrapper">
             <div id="metanavigation">
-                <a href="#" id="{{startpage.id}}">HOME</a>&nbsp;|&nbsp;
+                <a href="index.html">HOME</a>&nbsp;|&nbsp;
                 <a href="http://www.kit.edu">KIT</a>
             </div>
             
@@ -43,37 +43,39 @@ $(document).ready(function(){
     {% endfor %}
 </ul><br/> 
 </div>
-                </div>
-                <div id="right-row">
+</div>
+
+
+<div id="right-row">
+
 {% if infobox is defined %}
 <div class="infobox">
     <div class="infobox-inner">
         <div class="padding4"><b> </b></div>
         <h2>{{infobox.title}}</h2>
-        <pre>{{infobox.text}}</pre>
+        <p>{{infobox.text}}</p>
         </div>
     </div>
-</div>
 {% endif %}
 
 <div class="infobox">
     <div class="infobox-inner" style="padding-bottom: 8px;">
         <div class="infobox-normal">
         <span>
-        <h2>Anschrift:</h2>
-        <pre>
-        <b>{{fullname}}</b>
-        Karlsruher Institut f&uuml;r<br />Technologie<br />
+        <h2>{{fullname}}</h2>
+        <p>
+        Karlsruher Institut f&uuml;r Technologie<br />
         {{institute}}<br />
         {{campus}}, Geb. {{building}}<br />
         {{street}}<br />
-        76131 Karlsruhe</pre>
+        76131 Karlsruhe
         E-Mail: <a hre="mailto:{{mail}}">{{mail}}</a>
-        Tel.: {{phone}}
+        Tel.: {{phone}}</p>
+        </span>
         </div>
     </div>
 </div>
-
+            </div>
                 <div id="middle-row">
                     <div id="content">
                         <a name="top" id="top"></a>
