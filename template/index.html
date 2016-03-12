@@ -10,9 +10,9 @@
 <script src="http://code.jquery.com/jquery-1.4.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    {% for id,title in navigation.items() %}
-    $("#{{id}}").click(function(){
-        $('#content').load('pages/{{id}}.html');
+    {% for entry in navigation %}
+    $("#{{entry.file}}").click(function(){
+        $('#content').load('pages/{{entry.file}}.html');
     });
     {% endfor %}
 });
@@ -38,8 +38,8 @@ $(document).ready(function(){
                 <div id="left-row">
                     <div id="menu-box">
 <ul>
-    {% for id,title in navigation.items() %}
-    <li class="li_level_1_not_selected" id="{{id}}"><a class="level_1_not_selected" href="#">{{title}}</a></li>
+    {% for entry in navigation|sort(attribute='order') %}
+    <li class="li_level_1_not_selected" id="{{entry.file}}"><a class="level_1_not_selected" href="#">{{entry.title}}</a></li>
     {% endfor %}
 </ul><br/> 
 </div>

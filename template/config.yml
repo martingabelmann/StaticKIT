@@ -17,8 +17,13 @@ startpage:
     title: Homepagetitle
 
 navigation:
-    example: Example Page
-    start: Startseite
+    - file: start
+      title: Startseite
+      order: 1
+    - file: example
+      title: Example Page
+      order: 2
+
 
 infobox:
     title: Info-Box
