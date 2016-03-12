@@ -17,6 +17,7 @@ startpage:
     title: Homepagetitle
 
 navigation:
+    example: Example Page
     start: Startseite
 
 infobox:
