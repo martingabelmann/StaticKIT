@@ -2,7 +2,7 @@
 
 from jinja import template
 import yaml
-
+import time
 
 try: 
     stream = open('config.yml', 'r')
@@ -15,7 +15,9 @@ try:
 except:
     print('config.tml seems not to be a valid yaml file.')
 
+import time
 
+rules.update({'date':time.strftime("%d/%m/%Y")})
 
 html  = template("index.html")
 html.add_subst(rules)
