@@ -1,0 +1,30 @@
+---
+
+title: My KIT Homepage
+
+fullname: Max Mustermann
+institute: Institute of ...
+campus: Campus Sued
+building: 30.23
+street: Musterstrasse 24
+phone: 0721 1234567
+mail: max.mustermann@kit.edu
+
+
+
+startpage:
+    id: start
+    title: Homepagetitle
+
+navigation:
+    start: Startseite
+
+infobox:
+    title: Info-Box
+    text: "A simple list
+        <ul>
+        <li>item 1</li>
+        <li>another item</li>
+        <li>third item</li>
+        </ul>
+        "
