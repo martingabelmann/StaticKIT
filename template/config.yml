@@ -13,7 +13,7 @@ mail: max.mustermann@kit.edu
 
 
 startpage:
-    id: start
+    file: start
     title: Homepagetitle
 
 navigation:
