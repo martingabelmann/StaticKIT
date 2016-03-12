@@ -13,9 +13,22 @@ $(document).ready(function(){
     $('#content').load('pages/{{startpage.file}}.html');
     {% for entry in navigation %}
     $("#{{entry.file}}").click(function(){
+        // load page content
         $('#content').load('pages/{{entry.file}}.html');
+        
+        // reset navigation button style to default
+        $('#menu-box li').removeClass("li_level_1_selected_no_children");
+        $('#menu-box li').addClass("li_level_1_not_selected");
+        $('#menu-box li a').removeClass("level_1_selected has_no_children");
+        $('#menu-box li a').addClass("level_1_not_selected");
+        // set navigation style of pressed button
+        $('#{{entry.file}}').removeClass("li_level_1_not_selected");
+        $('#{{entry.file}}').addClass("li_level_1_selected_no_children");
+        $('#{{entry.file}} > a').removeClass("has_no_children");
+        $('#{{entry.file}} > a').addClass("level_1_selected has_no_children");
     });
     {% endfor %}
+
 });
 </script>
 
