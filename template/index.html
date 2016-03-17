@@ -63,13 +63,15 @@ $(document).ready(function(){
 <div id="right-row">
 
 {% if infobox is defined %}
+{% for box in infobox %}
 <div class="infobox">
     <div class="infobox-inner">
         <div class="padding4"><b> </b></div>
-        <h2>{{infobox.title}}</h2>
-        <p>{{infobox.text}}</p>
+        <h2>{{box.title}}</h2>
+        <p>{{box.text}}</p>
         </div>
     </div>
+{% endfor %}
 {% endif %}
 
 <div class="infobox">

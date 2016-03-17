@@ -26,11 +26,20 @@ navigation:
 
 
 infobox:
-    title: Info-Box
-    text: "A simple list
-        <ul>
-        <li>item 1</li>
-        <li>another item</li>
-        <li>third item</li>
-        </ul>
-        "
+    - title: Info-Box
+      text: "A simple list
+          <ul>
+          <li>item 1</li>
+          <li>another item</li>
+          <li>third item</li>
+          </ul>
+          "
+    - title: Info-Box2
+      text: "A simple list
+          <ul>
+          <li>item 1</li>
+          <li>another item</li>
+          <li>third item</li>
+          </ul>
+          "
+ 
