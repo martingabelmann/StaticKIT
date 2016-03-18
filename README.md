@@ -13,7 +13,9 @@ Many institutes at the KIT provide a ``.public_html`` directory in the homedir o
 The intention of this project is, to have a minimalistic framework for building simple website structures without batteling with thousands of html files and just concentrating on the content.
 
 ## Quickstart
- * Put your personal data/config in the [config.yml](template/config.yml),
+ * get a clone of this repository: ``git clone https://github.com/particleKIT/StaticKIT.git`` and join the directory.
+ * create a new branch ``git checkout -b online`` that will contain your work.
+ * Put your personal data/config in the [template/config.yml](template/config.yml),
  * for every page create a ``.html`` file at ``/pages/`` and fill it with your (html) content,
  * every page that has to be shown in the navigation needs an entry in the config.yml, the syntax is as follows: 
   
@@ -42,4 +44,8 @@ infobox:
       text: "another infobox"
 ```
 If you need more space and dont want to show the right column at all, simply set the ``showboxes: false`` variable the config.yml. 
- 
+
+## Branches
+
+We suggest to have at least one additional branch, like shown in the quickstart. This way you can pull and watch out changes from this repo without changing (or even breaking) your published website.
+
