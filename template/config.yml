@@ -25,6 +25,7 @@ navigation:
       order: 2
 
 
+showboxes: true
 infobox:
     - title: Info-Box
       text: "A simple list

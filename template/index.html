@@ -33,6 +33,18 @@ $(document).ready(function(){
 </script>
 
 
+{% if not showboxes %}
+<style type="text/css">
+    div#wrapper {
+        background-image:url(img/intern/bg_wrapper2_V2.png);
+    }
+    #middle-row, .tabelle3, .ptabelle, .ptabelleblank, .datentabelle {
+        width:760px !important; 
+    }
+</style>   
+{% endif %}
+
+
 <title>{{startpage.title}}</title>
 </head>
     <body>
@@ -59,7 +71,7 @@ $(document).ready(function(){
 </div>
 </div>
 
-
+{% if showboxes %}
 <div id="right-row">
 
 {% if infobox is defined %}
@@ -91,7 +103,9 @@ $(document).ready(function(){
         </div>
     </div>
 </div>
-            </div>
+</div>
+{% endif %}
+
                 <div id="middle-row">
                     <div id="content">
                         <a name="top" id="top"></a>
