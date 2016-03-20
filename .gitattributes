@@ -2,3 +2,4 @@
 *.jpg -text -diff
 *.png -text -diff
 *.pdf -text -diff
+*.js -text -diff

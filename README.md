@@ -45,7 +45,12 @@ infobox:
 ```
 If you need more space and dont want to show the right column at all, simply set the ``showboxes: false`` variable the config.yml. 
 
+## Linking your pages
+Loading page content from specific files under ``/pages/*.html`` is triggered by appending a ``#filename`` (without .html extension) in the addresbar. Thus you can give others a link to one of your pages by copy&paste the resulting url from the navigation/browser address bar.
+
 ## Branches
 
 We suggest to have at least one additional branch, like shown in the quickstart. This way you can pull and watch out changes from this repo without changing (or even breaking) your published website.
 
+## Subpages
+At the moment it is not possible to have foldable sub categories in the navigation. We`ll investigate in some, if there are enough requests.

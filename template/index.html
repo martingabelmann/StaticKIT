@@ -7,9 +7,16 @@
 <meta http-equiv="cleartype" content="on" />
 <link rel="shortcut icon" type="image/x-icon" href="img/intern/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="style.css" />
-<script src="http://code.jquery.com/jquery-1.4.min.js" type="text/javascript"></script>
+<script src="jquery/jquery-1.4.min.js" type="text/javascript"></script>
+<script src="jquery/jquery.ba-hashchange.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+
+var pages = {}
+{% for page in navigation %}
+pages['{{page.file}}']= '{{page.title}}';
+{% endfor %}
+
 
 function resetNavigation() {
     // reset navigation button style to default
@@ -27,17 +34,25 @@ function setNavigation(button) {
     $(button + ' > a').addClass("level_1_selected has_no_children");
 }
 
-$(document).ready(function(){
-    $('#content').load('pages/{{startpage.file}}.html');
-    {% for entry in navigation %}
-    $("#{{entry.file}}").click(function(){
-        // load page content
-        $('#content').load('pages/{{entry.file}}.html');
-        resetNavigation();        
-        setNavigation('#{{entry.file}}');        
-   });
-    {% endfor %}
+function openPage(file) {
+    //load content of given file into #content div
+    $('#content').load('pages/' + file + '.html');
+    resetNavigation();
+    setNavigation('#' + file);
+    document.title = pages[file];
+}
 
+$(document).ready(function(){
+      openPage('{{startpage.file}}');
+      // trigger openpage when hash changes
+      $(window).hashchange( function(){
+          var hash = location.hash;
+          var file = ( hash.replace( /^#/, '' ) || false )
+          if(pages.hasOwnProperty(file)) {
+              openPage(file);
+          }
+      })
+      $(window).hashchange();
 });
 </script>
 
@@ -74,7 +89,7 @@ $(document).ready(function(){
                     <div id="menu-box">
 <ul>
     {% for entry in navigation|sort(attribute='order') %}
-    <li class="li_level_1_not_selected" id="{{entry.file}}"><a class="level_1_not_selected" href="#">{{entry.title}}</a></li>
+    <li class="li_level_1_not_selected" id="{{entry.file}}"><a class="level_1_not_selected" href="#{{entry.file}}">{{entry.title}}</a></li>
     {% endfor %}
 </ul><br/> 
 </div>
