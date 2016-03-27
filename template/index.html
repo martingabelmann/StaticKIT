@@ -117,12 +117,15 @@ $(document).ready(function(){
         <h2>{{fullname}}</h2>
         <p>
         Karlsruher Institut f&uuml;r Technologie<br />
-        {{institute}}<br />
-        {{campus}}, Geb. {{building}}<br />
-        {{street}}<br />
-        76131 Karlsruhe
-        E-Mail: <a hre="mailto:{{mail}}">{{mail}}</a>
-        Tel.: {{phone}}</p>
+        {% if institute is defined %}{{institute}}<br />{% endif %}
+        {% if campus is defined %}{{campus}}, {% endif %}
+        {% if building is defined %}Geb. {{building}}{% endif %}
+        {% if campus is defined or building is defined %}<br />{% endif %}
+        {% if street is defined %}{{street}}<br />{% endif %}
+        76131 Karlsruhe<br />
+        {% if mail is defined %}E-Mail: <a href="mailto:{{mail}}">{{mail}}</a><br />{% endif %}
+        {% if phone is defined %}Tel.: {{phone}}{% endif %}
+</p>
         </span>
         </div>
     </div>
