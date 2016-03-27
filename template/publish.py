@@ -51,7 +51,7 @@ except:
 try:
     rules = yaml.load(stream)
     rules = parse_vars(rules)
-exept:
+except:
     print('config.yml seems not to be a valid yaml file.')
 
 rules.update({'date':time.strftime("%d/%m/%Y")})
