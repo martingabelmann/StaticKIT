@@ -46,7 +46,17 @@ infobox:
 If you need more space and dont want to show the right column at all, simply set the ``showboxes: false`` variable the config.yml. 
 
 ## Linking your pages
-Loading page content from specific files under ``/pages/*.html`` is triggered by appending a ``#filename`` (without .html extension) in the addresbar. Thus you can give others a link to one of your pages by copy&paste the resulting url from the navigation/browser address bar.
+Loading page content from specific files under ``/pages/*.html`` is triggered by appending a ``#filename`` (without .html extension) in the addressbar. Thus you can give others a link to one of your pages by copy&paste the resulting url from the navigation/browser address bar.
+
+
+## Recycling variables
+People using ansible (which mixes yaml and jinja2) may be confused, because standalone YAML does not come with a feature to concatenate variables.
+However, we introduced a simple variable parser that replaces ``{{vars}}`` with their values. So far it is only possible to replace with simple vars, no list/dict items. E.g:
+```yaml
+mail: my@email.de
+text: 'contact me at {{mail}}'
+```
+will lead to the desired result.
 
 ## Branches
 
