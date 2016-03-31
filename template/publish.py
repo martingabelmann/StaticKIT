@@ -30,10 +30,10 @@ def parse_vars(yamlin, recursive=False):
             yamlout=''
             for var in foundvars:
                 inline_var = '{{' + var + '}}'
-                yamlin = str(yamlin.replace(inline_var, str(global_yaml[var])))
-            yamlout = str(yamlin)
+                yamlin = yamlin.replace(inline_var, str(global_yaml[var]))
+            yamlout = yamlin
         else:
-            yamlout = str(yamlin)
+            yamlout = yamlin
 
     # be sure nothing gets lost
     else:
