@@ -10,8 +10,6 @@ street: Musterstrasse 24
 phone: 0721 1234567
 mail: max.mustermann@kit.edu
 
-
-
 startpage:
     file: start
     title: Homepagetitle
@@ -27,20 +25,20 @@ navigation:
 
 showboxes: true
 infobox:
-    - title: Info-Box
-      text: "A simple list
+    - title: Example-Box
+      text: |
+          A simple list
           <ul>
           <li>item 1</li>
           <li>another item</li>
           <li>third item</li>
           </ul>
-          "
-    - title: Info-Box2
-      text: "A simple list
-          <ul>
-          <li>item 1</li>
-          <li>another item</li>
-          <li>third item</li>
-          </ul>
-          "
- 
+    - title: "{{fullname}}"
+      text: |
+            Karlsruher Institut f&uuml;r Technologie<br />
+            {{institute}}<br />
+            {{campus}}, Geb. {{building}}<br />
+            {{street}}<br />
+            76131 Karlsruhe<br />
+            E-Mail: <a href='mailto:{{mail}}'>{{mail}}</a><br />
+            Phone: {{phone}}
