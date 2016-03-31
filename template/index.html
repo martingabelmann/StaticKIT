@@ -74,8 +74,10 @@ $(document).ready(function(){
     <body>
         <div id="wrapper">
             <div id="metanavigation">
-                <a href="index.html">HOME</a>&nbsp;|&nbsp;
-                <a href="http://www.kit.edu">KIT</a>
+
+{% for entry in headernavigation|sort(attribute='order') %}
+    <a href="{{entry.href}}">{{entry.title}}</a> {% if not loop.last %}|{% endif %}
+{% endfor %}
             </div>
             
             <div id="head">

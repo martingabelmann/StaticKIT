@@ -14,6 +14,15 @@ startpage:
     file: start
     title: Homepagetitle
 
+headernavigation:
+    - title: HOME
+      href: '#start'
+      order: 1
+    - title: KIT
+      href: 'https://www.kit.edu'
+      order: 2
+
+
 navigation:
     - file: start
       title: Startseite
