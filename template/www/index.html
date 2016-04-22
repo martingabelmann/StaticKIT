@@ -28,6 +28,7 @@ function resetNavigation() {
 
 function setNavigation(button) {
    // set navigation style of pressed button
+    button = button.replace(/\//g,"\\/")
     $(button).removeClass("li_level_1_not_selected");
     $(button).addClass("li_level_1_selected_no_children");
     $(button + ' > a').removeClass("has_no_children");

@@ -56,7 +56,8 @@ except:
 
 rules.update({'date':time.strftime("%d/%m/%Y")})
 
-html  = template("index.html")
+html  = template("./www/")
 html.add_subst(rules)
-html.save('../index.html')
+html.save('../')
 html.clear()
+
