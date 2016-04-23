@@ -16,7 +16,7 @@ The intention of this project is, to have a minimalistic framework for building 
  * get a clone of this repository: ``git clone https://github.com/particleKIT/StaticKIT.git`` and join the directory.
  * create a new branch ``git checkout -b online`` that will contain your work.
  * Put your personal data/config in the [template/config.yml](template/config.yml),
- * for every page that makes use of variables/jinja2 syntax create a ``.html`` file at ``template/www/pages/`` and fill it with your (html) content,
+ * for every page that makes use of variables/jinja2 syntax create a ``.html`` file at ``template/www/pages/`` and fill it with your (html or markdown) content,
  * for completely static pages you can create a ``.html`` file directly at ``pages/`` (where the templates also will take place),
  * every page that should be shown in the navigation needs an entry in the config.yml, the syntax is as follows: 
   
@@ -58,6 +58,20 @@ mail: my@email.de
 text: 'contact me at {{mail}}'
 ```
 will lead to the desired result.
+
+## Markdown
+You can use Githubs markdown ([showdownjs/showdown](showdown) stricly speaking) when encapsulated in a div with the ``markdown`` class:
+```html
+<div class="markdown">
+#this is a markdown page
+we can use 
+ * lists, 
+ * _tables_, 
+ * **formatting**
+ * ...
+here
+</div>
+```
 
 ## Branches
 
