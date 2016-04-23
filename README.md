@@ -60,7 +60,7 @@ text: 'contact me at {{mail}}'
 will lead to the desired result.
 
 ## Markdown
-You can use Githubs markdown ([showdownjs/showdown](showdown) stricly speaking) when encapsulated in a div with the ``markdown`` class:
+You can use Githubs markdown ([showdown](https://github.com/showdownjs/showdown) stricly speaking) when encapsulated in a div with the ``markdown`` class:
 ```html
 <div class="markdown">
 #this is a markdown page
@@ -72,6 +72,7 @@ we can use
 here
 </div>
 ```
+For a detailed markdown description see the [showdown wiki syntax page](https://github.com/showdownjs/showdown/wiki/Showdown's-Markdown-syntax).
 
 ## Branches
 
