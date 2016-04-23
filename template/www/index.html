@@ -14,6 +14,12 @@
 <script type="text/javascript">
 
 var converter = new showdown.Converter();
+converter.setOption('tables', true);
+converter.setOption('strikethrough', true);
+converter.setOption('tasklist', true);
+converter.setOption('tables', true);
+converter.setOption('parseImgDimensions', true);
+
 var pages = {}
 {% for page in navigation %}
 pages['{{page.file}}']= '{{page.title}}';
