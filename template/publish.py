@@ -7,9 +7,9 @@ import re
 
 # allow/support basic variable substitions in yaml file
 # you can reuse variables with {{variablename}} within other objects
-def parse_vars(yamlin, recursive=False):
+def parse_vars(yamlin):
     # save the initial object
-    if not recursive:
+    if 'global_yaml' not in globals():
         global global_yaml
         global_yaml = yamlin
 
@@ -17,11 +17,11 @@ def parse_vars(yamlin, recursive=False):
     if isinstance(yamlin, list):
         yamlout=[]
         for sub in yamlin:
-            yamlout.append(parse_vars(sub, True))
+            yamlout.append(parse_vars(sub))
     elif isinstance(yamlin, dict):
         yamlout={}
         for sub in yamlin:
-            yamlout[sub] = parse_vars(yamlin[sub], True)
+            yamlout[sub] = parse_vars(yamlin[sub])
 
     # replace {{vars}} in strings with their values
     elif isinstance(yamlin, str):
