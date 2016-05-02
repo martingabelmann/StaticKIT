@@ -4,6 +4,7 @@ from jinja import template
 import yaml
 import time
 import re
+import sys
 
 # allow/support basic variable substitions in yaml file
 # you can reuse variables with {{variablename}} within other objects
@@ -30,7 +31,11 @@ def parse_vars(yamlin):
             yamlout=''
             for var in foundvars:
                 inline_var = '{{' + var + '}}'
-                yamlin = yamlin.replace(inline_var, str(global_yaml[var]))
+                if var in global_yaml:
+                    yamlin = yamlin.replace(inline_var, str(global_yaml[var]))
+                else:
+                    print('{{' + var + '}} is not defined')
+                    sys.exit(0)
             yamlout = yamlin
         else:
             yamlout = yamlin
