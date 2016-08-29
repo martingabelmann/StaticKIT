@@ -105,8 +105,8 @@ def copytree(src, dst, ignore=[]):
                 dstlastedit = os.path.getmtime(dstname)
                 if srclastedit != dstlastedit:
                     override = input(dstname + " was edited, override? (y/n): ")
-                    if override == "n": continue
-                os.remove(dstname)
+                    if override == "y": os.remove(dstname)
+                continue
             copy2(srcname, dstname)
     copystat(src, dst)
 
