@@ -33,8 +33,6 @@ class template:
                 sfileout = fileout + '/' + os.path.basename(file)
                 self.__savefile(filein + '/' + file, sfileout, mode)
         else:
-            print(filein)
-            print(fileout)
             content = self.env.get_template(os.path.relpath(filein, self.templatedir)).render(self.substitutions)
             f = codecs.open(fileout, mode, encoding='utf-8')
             f.write(content)
