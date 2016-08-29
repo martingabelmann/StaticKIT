@@ -2,12 +2,46 @@
 
 from jinja import template
 import yaml
+import os
+from shutil import copy2, copystat
+import argparse
 import time
 import re
 import sys
 
-# allow/support basic variable substitions in yaml file
-# you can reuse variables with {{variablename}} within other objects
+
+"""
+parse arguments and print help file
+"""
+
+parser = argparse.ArgumentParser(description='build static htmls from jinja templates that fake the KIT layout')
+
+parser.add_argument('--verbose',
+                    '-v',
+                    action='count',
+                    help='more output (use multiple times to increase verbosity level)',
+                    default=0)
+
+parser.add_argument('--dryrun',
+                    '-d',
+                    action='store_true',
+                    help='Don\'t write anything to files')
+
+parser.add_argument('--inputdir',
+    		    '-i',
+                    default='.',
+                    help='directory containing the jinja pages and a config.yml (defaults to the working directory)')
+
+parser.add_argument('--outputdir',
+    		    '-o',
+                    default=os.path.expanduser('~') + '/.public_html',
+                    help='destination directory for static html website (defaults to ~/.public_html)')
+
+
+"""
+variable substitions in yaml files
+you can reuse variables with {{variablename}} within other objects
+"""
 def parse_vars(yamlin):
     # save the initial object
     if 'global_yaml' not in globals():
@@ -48,21 +82,63 @@ def parse_vars(yamlin):
 
 
 
-try: 
-    stream = open('config.yml', 'r')
-except:
-    print('could not open config.yml')
+"""
+anotherversion of copytree
+src:    source directory 
+dst:    destination directory
+ignore: list of ignored files/dirs
+"""
+def copytree(src, dst, ignore=[]):
+    names = os.listdir(src)
+    for name in names:
+        if name in ignore:
+            continue
+        srcname = os.path.join(src, name)
+        dstname = os.path.join(dst, name)
+        if os.path.isdir(srcname):
+            if not os.path.exists(dstname):
+                os.makedirs(dstname)
+            copytree(srcname, dstname, ignore)
+        else:
+            if os.path.exists(dstname):
+                srclastedit = os.path.getmtime(srcname)
+                dstlastedit = os.path.getmtime(dstname)
+                if srclastedit != dstlastedit:
+                    override = input(dstname + " was edited, override? (y/n): ")
+                    if override == "n": continue
+                os.remove(dstname)
+            copy2(srcname, dstname)
+    copystat(src, dst)
 
-try:
-    rules = yaml.load(stream)
-    rules = parse_vars(rules)
-except:
-    print('config.yml seems not to be a valid yaml file.')
+def main():
+    args       = parser.parse_args()
+    inputdir   = args.inputdir
+    outputdir   = args.outputdir
+    configfile = inputdir + '/config.yml'
+    sourcesdir = os.path.dirname(os.path.abspath(__file__)) + '/sources'
+    
+    copytree(sourcesdir, outputdir, ['index.html'])
 
-rules.update({'date':time.strftime("%d/%m/%Y")})
+    try: 
+        stream = open(configfile, 'r')
+    except FileNotFoundError:
+        print('could not open ' + configfile)
+        parser.print_help()
+        exit(1)
 
-html  = template("./www/")
-html.add_subst(rules)
-html.save('../')
-html.clear()
+    try:
+        rules = yaml.load(stream)
+        rules = parse_vars(rules)
+    except:
+        print('config.yml seems not to be a valid yaml file.')
+        exit(1)
+        
+    rules.update({'date':time.strftime("%d/%m/%Y")})    
+    
+    html  = template(inputdir + '/pages/')
+    html.add_subst(rules)
+    html.save(outputdir + '/pages/')
+    html.clear()
 
+if __name__ == "__main__":
+    main()
