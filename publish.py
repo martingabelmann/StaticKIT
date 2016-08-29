@@ -135,9 +135,9 @@ def main():
         
     rules.update({'date':time.strftime("%d/%m/%Y")})    
     
-    html  = template(inputdir + '/pages/')
+    html  = template(inputdir + '/pages')
     html.add_subst(rules)
-    html.save(outputdir + '/pages/')
+    html.save(outputdir + '/pages')
     html.clear()
 
 if __name__ == "__main__":

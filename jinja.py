@@ -10,9 +10,9 @@ from jinja2 import Environment, FileSystemLoader
 class template:
 
     def __init__(self, template):
-        self.template     = template
-        self.templatedir  = os.path.dirname(os.path.abspath(__file__))
-        self.env          = Environment(loader=FileSystemLoader(self.templatedir),trim_blocks=True)
+        self.template      = template
+        self.templatedir   = os.path.abspath(template) if os.path.isdir(template) else os.path.abspath(os.path.dirname(template))
+        self.env           = Environment(loader=FileSystemLoader(self.templatedir),trim_blocks=True)
         self.substitutions = {}
 
     def add_subst(self, new):
@@ -25,20 +25,19 @@ class template:
         self.substitutions.clear()
         self.env.globals.clear()
 
-    def save(self, fileout, mode='w'):
-        dirname = os.path.dirname(fileout)
-        if not os.path.exists(dirname) and dirname != '':
-            os.makedirs(dirname)
-        
-        if os.path.isdir(self.template):
-            for root,dir,files in os.walk(self.template):
-                for file in files:
-                    content = self.env.get_template(root + '/' + file).render(self.substitutions)
-                    if not os.path.exists(fileout + os.path.basename(root)):
-                        os.makedirs(fileout + os.path.basename(root))
-                    f = codecs.open(fileout + os.path.basename(root) + '/' + file, mode, encoding='utf-8')
-                    f.write(content)
+    def __savefile(self, filein, fileout, mode):
+        if os.path.isdir(filein):
+            if not os.path.isdir(fileout):
+                os.makedirs(fileout)
+            for file in os.listdir(filein):
+                sfileout = fileout + '/' + os.path.basename(file)
+                self.__savefile(filein + '/' + file, sfileout, mode)
         else:
-            content = self.env.get_template(self.template).render(self.substitutions)
+            print(filein)
+            print(fileout)
+            content = self.env.get_template(os.path.relpath(filein, self.templatedir)).render(self.substitutions)
             f = codecs.open(fileout, mode, encoding='utf-8')
             f.write(content)
+
+    def save(self, fileout, mode='w'):
+        self.__savefile(self.template, os.path.abspath(fileout), mode)
