@@ -15,7 +15,7 @@ import sys
 parse arguments and print help file
 """
 
-parser = argparse.ArgumentParser(description='build static htmls from jinja templates that fake the KIT layout')
+parser = argparse.ArgumentParser(description='Build static htmls from Jinja2 templates that fake the KIT layout')
 
 parser.add_argument('--verbose',
                     '-v',
@@ -26,22 +26,26 @@ parser.add_argument('--verbose',
 parser.add_argument('--dryrun',
                     '-d',
                     action='store_true',
-                    help='Don\'t write anything to files')
+                    help='don\'t write anything to files')
 
 parser.add_argument('--force',
                     '-f',
                     action='store_true',
-                    help='Don\'t ask to override existing files')
+                    help='don\'t ask to override existing files')
 
 parser.add_argument('--inputdir',
-    		    '-i',
+    		        '-i',
                     default='.',
                     help='directory containing the jinja pages and a config.yml (defaults to the working directory)')
 
 parser.add_argument('--outputdir',
-    		    '-o',
+    		        '-o',
                     default=os.path.expanduser('~') + '/.public_html',
                     help='destination directory for static html website (defaults to ~/.public_html)')
+
+parser.add_argument('--init',
+    		        '-ii',
+                    help='initialize a new project at directory INIT')
 
 
 """
@@ -133,6 +137,15 @@ def main():
         logging.debug("running in debug mode")
     else:
         logging.getLogger().setLevel(logging.DEBUG)
+
+
+    if args.init:
+        if os.path.isdir(args.init) and os.listdir!="" and not args.force:
+            logging.error('directory ' + args.init + ' already exists and is not empty!')
+            exit(1)
+        print("copying example project to " + args.init)
+        copytree(os.path.dirname(os.path.abspath(__file__)) + '/example', args.init, [], args.force)
+        exit(0)
 
     inputdir   = os.path.abspath(args.inputdir)
     outputdir  = os.path.abspath(args.outputdir)
