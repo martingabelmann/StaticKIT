@@ -129,12 +129,13 @@ def copytree(src, dst, ignore=[], force=False):
 initialize a new project
 dest: destination where the project is initialized
 """
-def init(dest, force=False):
+def init(dest, dryrun=False, force=False):
     if os.path.isdir(dest) and os.listdir!="" and not force:
         logging.error('directory ' + dest + ' already exists and is not empty!')
         exit(1)
-    print("copying example project to " + dest)
-    copytree(os.path.dirname(os.path.abspath(__file__)) + '/example', dest, [], force)
+    if not dryrun:
+        print("copying example project to " + dest)
+        copytree(os.path.dirname(os.path.abspath(__file__)) + '/example', dest, [], force)
 
 
 """
@@ -145,7 +146,7 @@ inputdir:   dir containing jinja templates
 outputdir:  where to place the resulting files
 configfile: yaml that is used for the templates 
 """
-def publish(inputdir, outputdir, configfile, force=False):
+def publish(inputdir, outputdir, configfile, dryrun=False, force=False):
     logging.debug("input location: " + inputdir)
     logging.debug("output location: " + outputdir) 
     logging.debug("using config file from: " + configfile)
@@ -179,8 +180,9 @@ def publish(inputdir, outputdir, configfile, force=False):
     logging.info("applying template rules from YAML")
     html.add_subst(rules)
     
-    logging.info("saving resulting documents to " + outputdir)
-    html.save(outputdir)
+    if not dryrun:
+        logging.info("saving resulting documents to " + outputdir)
+        html.save(outputdir)
     html.clear()
 
 """
@@ -206,23 +208,28 @@ def main():
     sourcesdir=os.path.dirname(os.path.abspath(__file__)) + '/sources'
 
     if args.init:
-        init(args.init, args.force)
+        init(args.init, args.dryrun, args.force)
     else:
+        print('running publish for ' + inputdir)
         publish(inputdir + '/pages', 
                 outputdir + '/pages', 
                 configfile, 
-                args.force)
+                force=args.force,
+                dryrun=args.dryrun)
  
+        print('running publish for ' + sourcesdir + '/index.html')
         publish(sourcesdir + '/index.html', 
                 outputdir + '/index.html', 
                 configfile, 
-                args.force)
+                force=args.force,
+                dryrun=args.dryrun)
                
-        logging.info("copying static contents (stylesheets etc.) from "  + sourcesdir + " to " + outputdir)
-        copytree(sourcesdir,
-                 outputdir, 
-                 ['index.html'], 
-                 args.force)
+        if not args.dryrun:
+            print("copying static contents (stylesheets etc.) from "  + sourcesdir + " to " + outputdir)
+            copytree(sourcesdir,
+                     outputdir, 
+                     ['index.html'], 
+                     args.force)
 
 
 """
