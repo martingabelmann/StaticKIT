@@ -50,7 +50,7 @@ parser.add_argument('--init',
 
 """
 variable substitions in yaml files
-you can reuse variables with {{variablename}} within other objects
+reuse variables with {{variablename}} within other objects
 """
 def parse_vars(yamlin):
     # save the initial object
@@ -127,46 +127,28 @@ def copytree(src, dst, ignore=[], force=False):
 
 """
 initialize a new project
+dest: destination where the project is initialized
 """
-def init(dest):
-    if os.path.isdir(args.init) and os.listdir!="" and not args.force:
-        logging.error('directory ' + args.init + ' already exists and is not empty!')
+def init(dest, force=False):
+    if os.path.isdir(dest) and os.listdir!="" and not force:
+        logging.error('directory ' + dest + ' already exists and is not empty!')
         exit(1)
-    print("copying example project to " + args.init)
-    copytree(os.path.dirname(os.path.abspath(__file__)) + '/example', args.init, [], args.force)
+    print("copying example project to " + dest)
+    copytree(os.path.dirname(os.path.abspath(__file__)) + '/example', dest, [], force)
 
 
+"""
+load YAML rules from file
+and build htmls wih jinja2
 
-def main():
-    args       = parser.parse_args()
-
-    logging.basicConfig(format='%(levelname)s:%(message)s')
-    if args.verbose == 0:
-        logging.getLogger().setLevel(logging.ERROR) 
-    elif args.verbose == 1:
-        logging.getLogger().setLevel(logging.INFO) 
-    elif args.verbose >= 2:
-        logging.getLogger().setLevel(logging.DEBUG)
-        logging.debug("running in debug mode")
-    else:
-        logging.getLogger().setLevel(logging.DEBUG)
-
-
-    if args.init:
-        init(args.init)
-        exit(0)
-
-    inputdir   = os.path.abspath(args.inputdir)
-    outputdir  = os.path.abspath(args.outputdir)
-    configfile = os.path.abspath(inputdir + '/config.yml')
-    sourcesdir = os.path.dirname(os.path.abspath(__file__)) + '/sources'
+inputdir:   dir containing jinja templates
+outputdir:  where to place the resulting files
+configfile: yaml that is used for the templates 
+"""
+def publish(inputdir, outputdir, configfile, force=False):
     logging.debug("input location: " + inputdir)
     logging.debug("output location: " + outputdir) 
     logging.debug("using config file from: " + configfile)
-    logging.debug("using sources from: " + sourcesdir)
- 
-    logging.info("copying static contents (stylesheets etc.) from "  + sourcesdir + " to " + outputdir)
-    copytree(sourcesdir, outputdir, ['index.html'], args.force)
 
     try:
         logging.info("opening config file "  + configfile)
@@ -191,15 +173,60 @@ def main():
    
     logging.debug("using YAML structure:\n+++++\n" + yaml.dump(rules) + "+++++")
 
-    logging.info("loading template dir " + inputdir + "/pages")
-    html  = template(inputdir + '/pages')
+    logging.info("loading template(s) " + inputdir)
+    html  = template(inputdir)
     
     logging.info("applying template rules from YAML")
     html.add_subst(rules)
     
-    logging.info("saving documents to " + outputdir + "/pages")
-    html.save(outputdir + '/pages')
+    logging.info("saving resulting documents to " + outputdir)
+    html.save(outputdir)
     html.clear()
 
+"""
+set loglevel, run argparser and init/publish
+"""
+def main():
+    args       = parser.parse_args()
+
+    logging.basicConfig(format='%(levelname)s:%(message)s')
+    if args.verbose == 0:
+        logging.getLogger().setLevel(logging.ERROR) 
+    elif args.verbose == 1:
+        logging.getLogger().setLevel(logging.INFO) 
+    elif args.verbose >= 2:
+        logging.getLogger().setLevel(logging.DEBUG)
+        logging.debug("running in debug mode")
+    else:
+        logging.getLogger().setLevel(logging.DEBUG)
+
+    inputdir=os.path.abspath(args.inputdir)
+    outputdir=os.path.abspath(args.outputdir)
+    configfile=os.path.abspath(args.inputdir + '/config.yml')
+    sourcesdir=os.path.dirname(os.path.abspath(__file__)) + '/sources'
+
+    if args.init:
+        init(args.init, args.force)
+    else:
+        publish(inputdir + '/pages', 
+                outputdir + '/pages', 
+                configfile, 
+                args.force)
+ 
+        publish(sourcesdir + '/index.html', 
+                outputdir + '/index.html', 
+                configfile, 
+                args.force)
+               
+        logging.info("copying static contents (stylesheets etc.) from "  + sourcesdir + " to " + outputdir)
+        copytree(sourcesdir,
+                 outputdir, 
+                 ['index.html'], 
+                 args.force)
+
+
+"""
+run main if this file is executed
+"""
 if __name__ == "__main__":
     main()
