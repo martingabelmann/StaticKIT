@@ -124,6 +124,19 @@ def copytree(src, dst, ignore=[], force=False):
             copy2(srcname, dstname)
     copystat(src, dst)
 
+
+"""
+initialize a new project
+"""
+def init(dest):
+    if os.path.isdir(args.init) and os.listdir!="" and not args.force:
+        logging.error('directory ' + args.init + ' already exists and is not empty!')
+        exit(1)
+    print("copying example project to " + args.init)
+    copytree(os.path.dirname(os.path.abspath(__file__)) + '/example', args.init, [], args.force)
+
+
+
 def main():
     args       = parser.parse_args()
 
@@ -140,11 +153,7 @@ def main():
 
 
     if args.init:
-        if os.path.isdir(args.init) and os.listdir!="" and not args.force:
-            logging.error('directory ' + args.init + ' already exists and is not empty!')
-            exit(1)
-        print("copying example project to " + args.init)
-        copytree(os.path.dirname(os.path.abspath(__file__)) + '/example', args.init, [], args.force)
+        init(args.init)
         exit(0)
 
     inputdir   = os.path.abspath(args.inputdir)
