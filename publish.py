@@ -5,6 +5,7 @@ import yaml
 import os
 from shutil import copy2, copystat
 import argparse
+import logging
 import time
 import re
 import sys
@@ -121,31 +122,60 @@ def copytree(src, dst, ignore=[], force=False):
 
 def main():
     args       = parser.parse_args()
-    inputdir   = args.inputdir
-    outputdir   = args.outputdir
-    configfile = inputdir + '/config.yml'
+
+    logging.basicConfig(format='%(levelname)s:%(message)s')
+    if args.verbose == 0:
+        logging.getLogger().setLevel(logging.ERROR) 
+    elif args.verbose == 1:
+        logging.getLogger().setLevel(logging.INFO) 
+    elif args.verbose >= 2:
+        logging.getLogger().setLevel(logging.DEBUG)
+        logging.debug("running in debug mode")
+    else:
+        logging.getLogger().setLevel(logging.DEBUG)
+
+    inputdir   = os.path.abspath(args.inputdir)
+    outputdir  = os.path.abspath(args.outputdir)
+    configfile = os.path.abspath(inputdir + '/config.yml')
     sourcesdir = os.path.dirname(os.path.abspath(__file__)) + '/sources'
-    
+    logging.debug("input location: " + inputdir)
+    logging.debug("output location: " + outputdir) 
+    logging.debug("using config file from: " + configfile)
+    logging.debug("using sources from: " + sourcesdir)
+ 
+    logging.info("copying static contents (stylesheets etc.) from "  + sourcesdir + " to " + outputdir)
     copytree(sourcesdir, outputdir, ['index.html'], args.force)
 
-    try: 
+    try:
+        logging.info("opening config file "  + configfile)
         stream = open(configfile, 'r')
     except FileNotFoundError:
-        print('could not open ' + configfile)
-        parser.print_help()
+        logging.error("could not open config file")
+        logging.error("file not found:" + configfile)
         exit(1)
 
     try:
+        logging.info("parsing config.yml for YAML")
         rules = yaml.load(stream)
         rules = parse_vars(rules)
     except:
-        print('config.yml seems not to be a valid yaml file.')
+        # TODO raise typical yaml exceptions
+        logging.error("config.yml seems not to be a valid yaml file.")
         exit(1)
-        
-    rules.update({'date':time.strftime("%d/%m/%Y")})    
     
+    
+    logging.debug("setting additional template variables")
+    rules.update({'date':time.strftime("%d/%m/%Y")})    
+   
+    logging.debug("using YAML structure:\n+++++\n" + yaml.dump(rules) + "+++++")
+
+    logging.info("loading template dir " + inputdir + "/pages")
     html  = template(inputdir + '/pages')
+    
+    logging.info("applying template rules from YAML")
     html.add_subst(rules)
+    
+    logging.info("saving documents to " + outputdir + "/pages")
     html.save(outputdir + '/pages')
     html.clear()
 
