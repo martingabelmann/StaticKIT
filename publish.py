@@ -27,6 +27,11 @@ parser.add_argument('--dryrun',
                     action='store_true',
                     help='Don\'t write anything to files')
 
+parser.add_argument('--force',
+                    '-f',
+                    action='store_true',
+                    help='Don\'t ask to override existing files')
+
 parser.add_argument('--inputdir',
     		    '-i',
                     default='.',
@@ -88,7 +93,7 @@ src:    source directory
 dst:    destination directory
 ignore: list of ignored files/dirs
 """
-def copytree(src, dst, ignore=[]):
+def copytree(src, dst, ignore=[], force=False):
     names = os.listdir(src)
     for name in names:
         if name in ignore:
@@ -98,15 +103,19 @@ def copytree(src, dst, ignore=[]):
         if os.path.isdir(srcname):
             if not os.path.exists(dstname):
                 os.makedirs(dstname)
-            copytree(srcname, dstname, ignore)
+            copytree(srcname, dstname, ignore, force)
         else:
             if os.path.exists(dstname):
                 srclastedit = os.path.getmtime(srcname)
                 dstlastedit = os.path.getmtime(dstname)
                 if srclastedit != dstlastedit:
-                    override = input(dstname + " was edited, override? (y/n): ")
-                    if override == "y": os.remove(dstname)
-                continue
+                    override = input(dstname + " was edited, override? (y/n): ") if not force else 'y'
+                    if override == "y": 
+                        os.remove(dstname)
+                    else:
+                        continue
+                else:
+                    continue
             copy2(srcname, dstname)
     copystat(src, dst)
 
@@ -117,7 +126,7 @@ def main():
     configfile = inputdir + '/config.yml'
     sourcesdir = os.path.dirname(os.path.abspath(__file__)) + '/sources'
     
-    copytree(sourcesdir, outputdir, ['index.html'])
+    copytree(sourcesdir, outputdir, ['index.html'], args.force)
 
     try: 
         stream = open(configfile, 'r')
