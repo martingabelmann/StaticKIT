@@ -47,6 +47,10 @@ parser.add_argument('--init',
     		        '-ii',
                     help='initialize a new project at directory INIT')
 
+parser.add_argument('--diff',
+    		        '-dd',
+                    action='store_true',
+                    help='show a simple diff between edited files')
 
 """
 variable substitions in yaml files
@@ -146,7 +150,7 @@ inputdir:   dir containing jinja templates
 outputdir:  where to place the resulting files
 configfile: yaml that is used for the templates 
 """
-def publish(inputdir, outputdir, configfile, dryrun=False, force=False):
+def publish(inputdir, outputdir, configfile, dryrun=False, diff=False, force=False):
     logging.debug("input location: " + inputdir)
     logging.debug("output location: " + outputdir) 
     logging.debug("using config file from: " + configfile)
@@ -180,9 +184,9 @@ def publish(inputdir, outputdir, configfile, dryrun=False, force=False):
     logging.info("applying template rules from YAML")
     html.add_subst(rules)
     
-    if not dryrun:
-        logging.info("saving resulting documents to " + outputdir)
-        html.save(outputdir)
+    mode = 'r' if dryrun else 'w'
+    logging.info("saving resulting documents to " + outputdir)
+    html.save(outputdir, mode, diff)
     html.clear()
 
 """
@@ -214,15 +218,18 @@ def main():
         publish(inputdir + '/pages', 
                 outputdir + '/pages', 
                 configfile, 
-                force=args.force,
-                dryrun=args.dryrun)
+                dryrun=args.dryrun,
+                diff=args.diff,
+                force=args.force)
+                
  
         print('running publish for ' + sourcesdir + '/index.html')
         publish(sourcesdir + '/index.html', 
                 outputdir + '/index.html', 
                 configfile, 
-                force=args.force,
-                dryrun=args.dryrun)
+                dryrun=args.dryrun,
+                diff=args.diff,
+                force=args.force)
                
         if not args.dryrun:
             print("copying static contents (stylesheets etc.) from "  + sourcesdir + " to " + outputdir)

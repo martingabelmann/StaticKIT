@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import sys
 import os
 import codecs
 import shutil
 from jinja2 import Environment, FileSystemLoader
+from difflib import unified_diff
 
 class template:
 
@@ -25,17 +25,27 @@ class template:
         self.substitutions.clear()
         self.env.globals.clear()
 
-    def __savefile(self, filein, fileout, mode):
+    def __savefile(self, filein, fileout, mode, diff):
         if os.path.isdir(filein):
             if not os.path.isdir(fileout):
                 os.makedirs(fileout)
             for file in os.listdir(filein):
                 sfileout = fileout + '/' + os.path.basename(file)
-                self.__savefile(filein + '/' + file, sfileout, mode)
+                self.__savefile(filein + '/' + file, sfileout, mode, diff)
         else:
             content = self.env.get_template(os.path.relpath(filein, self.templatedir)).render(self.substitutions)
-            f = codecs.open(fileout, mode, encoding='utf-8')
-            f.write(content)
+            if diff:
+                if os.path.isfile(fileout):
+                    before=open(fileout).read().splitlines()
+                    after=content.splitlines()
+                    print('\n'.join(unified_diff(before, after, fromfile=fileout, tofile=fileout))) 
+                else:
+                    print("created: " + fileout)
 
-    def save(self, fileout, mode='w'):
-        self.__savefile(self.template, os.path.abspath(fileout), mode)
+            if mode == "w":
+                f = codecs.open(fileout, mode, encoding='utf-8')
+                f.write(content)
+
+    def save(self, fileout, mode='w', diff=False):
+        self.__savefile(self.template, os.path.abspath(fileout), mode, diff)
+
