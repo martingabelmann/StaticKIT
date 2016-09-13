@@ -102,7 +102,7 @@ src:    source directory
 dst:    destination directory
 ignore: list of ignored files/dirs
 """
-def copytree(src, dst, ignore=[], force=False):
+def copytree(src, dst, ignore=[], verbose=0, force=False):
     names = os.listdir(src)
     for name in names:
         if name in ignore:
@@ -112,7 +112,7 @@ def copytree(src, dst, ignore=[], force=False):
         if os.path.isdir(srcname):
             if not os.path.exists(dstname):
                 os.makedirs(dstname)
-            copytree(srcname, dstname, ignore, force)
+            copytree(srcname, dstname, ignore, verbose, force)
         else:
             if os.path.exists(dstname):
                 srclastedit = os.path.getmtime(srcname)
@@ -120,11 +120,15 @@ def copytree(src, dst, ignore=[], force=False):
                 if srclastedit != dstlastedit:
                     override = input(dstname + " was edited, override? (y/n): ") if not force else 'y'
                     if override == "y": 
+                        if verbose > 0:
+                            print('removing ' + dstname)
                         os.remove(dstname)
                     else:
                         continue
                 else:
                     continue
+            if verbose > 0:
+                print('copying ' + srcname + ' to ' + dstname)
             copy2(srcname, dstname)
     copystat(src, dst)
 
@@ -232,10 +236,10 @@ def main():
                 force=args.force)
                
         if not args.dryrun:
-            print("copying static contents (stylesheets etc.) from "  + sourcesdir + " to " + outputdir)
             copytree(sourcesdir,
                      outputdir, 
-                     ['index.html'], 
+                     ['index.html'],
+                     args.verbose,
                      args.force)
 
 
