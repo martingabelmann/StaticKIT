@@ -149,55 +149,9 @@ def init(dest, dryrun=False, force=False):
 """
 load YAML rules from file
 and build htmls wih jinja2
-
-inputdir:   dir containing jinja templates
-outputdir:  where to place the resulting files
-configfile: yaml that is used for the templates 
-"""
-def publish(inputdir, outputdir, configfile, dryrun=False, diff=False, force=False):
-    logging.debug("input location: " + inputdir)
-    logging.debug("output location: " + outputdir) 
-    logging.debug("using config file from: " + configfile)
-
-    try:
-        logging.info("opening config file "  + configfile)
-        stream = open(configfile, 'r')
-    except FileNotFoundError:
-        logging.error("could not open config file")
-        logging.error("file not found:" + configfile)
-        exit(1)
-
-    try:
-        logging.info("parsing config.yml for YAML")
-        rules = yaml.load(stream)
-        rules = parse_vars(rules)
-    except:
-        # TODO raise typical yaml exceptions
-        logging.error("config.yml seems not to be a valid yaml file.")
-        exit(1)
-    
-    
-    logging.debug("setting additional template variables")
-    rules.update({'date':time.strftime("%d/%m/%Y")})    
-   
-    logging.debug("using YAML structure:\n+++++\n" + yaml.dump(rules) + "+++++")
-
-    logging.info("loading template(s) " + inputdir)
-    html  = template()
-    
-    logging.info("applying template rules from YAML")
-    html.add_subst(rules)
-    
-    mode = 'r' if dryrun else 'w'
-    logging.info("saving resulting documents to " + outputdir)
-    html.save(inputdir, outputdir, mode, diff)
-    html.clear()
-
-"""
-set loglevel, run argparser and init/publish
 """
 def main():
-    args       = parser.parse_args()
+    args = parser.parse_args()
 
     logging.basicConfig(format='%(levelname)s:%(message)s')
     if args.verbose == 0:
@@ -210,31 +164,55 @@ def main():
     else:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    inputdir=os.path.abspath(args.inputdir)
-    outputdir=os.path.abspath(args.outputdir)
-    configfile=os.path.abspath(args.inputdir + '/config.yml')
-    sourcesdir=os.path.dirname(os.path.abspath(__file__)) + '/sources'
+    inputdir   = os.path.abspath(args.inputdir)
+    outputdir  = os.path.abspath(args.outputdir)
+    configfile = os.path.abspath(args.inputdir + '/config.yml')
+    sourcesdir = os.path.dirname(os.path.abspath(__file__)) + '/sources'
 
     if args.init:
         init(args.init, args.dryrun, args.force)
     else:
-        print('running publish for ' + inputdir)
-        publish(inputdir + '/pages', 
-                outputdir + '/pages', 
-                configfile, 
-                dryrun=args.dryrun,
-                diff=args.diff,
-                force=args.force)
-                
- 
-        print('running publish for ' + sourcesdir + '/index.html')
-        publish(sourcesdir + '/index.html', 
-                outputdir + '/index.html', 
-                configfile, 
-                dryrun=args.dryrun,
-                diff=args.diff,
-                force=args.force)
-               
+        logging.debug("input location: " + inputdir)
+        logging.debug("output location: " + outputdir) 
+        logging.debug("using config file from: " + configfile)
+        logging.debug("using sources from: " + sourcesdir)
+
+        try:
+            logging.info("opening config file "  + configfile)
+            stream = open(configfile, 'r')
+        except FileNotFoundError:
+            logging.error("could not open config file")
+            logging.error("file not found:" + configfile)
+            exit(1)
+
+        try:
+            logging.info("parsing config.yml for YAML")
+            rules = yaml.load(stream)
+            rules = parse_vars(rules)
+        except:
+            # TODO raise typical yaml exceptions
+            logging.error("config.yml seems not to be a valid yaml file.")
+            exit(1)
+        
+        logging.debug("setting additional template variables")
+        rules.update({'date':time.strftime("%d/%m/%Y")})    
+   
+        logging.debug("using YAML structure:\n+++++\n" + yaml.dump(rules) + "+++++")
+
+        logging.info("loading template(s) " + inputdir)
+        html  = template()
+        
+        logging.info("applying template rules from YAML")
+        html.add_subst(rules)
+        
+        mode = 'r' if args.dryrun else 'w'
+        logging.info("saving resulting documents to " + outputdir)
+        print('building html pages from ' + inputdir)
+        html.save(inputdir + '/pages', outputdir + '/pages', mode, args.diff)
+        print('building homepage from ' + sourcesdir + '/index.html')
+        html.save(sourcesdir + '/index.html', outputdir + '/index.html', mode, args.diff)
+        html.clear()
+
         if not args.dryrun:
             copytree(sourcesdir,
                      outputdir, 
