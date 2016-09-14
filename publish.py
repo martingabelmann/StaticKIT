@@ -183,14 +183,14 @@ def publish(inputdir, outputdir, configfile, dryrun=False, diff=False, force=Fal
     logging.debug("using YAML structure:\n+++++\n" + yaml.dump(rules) + "+++++")
 
     logging.info("loading template(s) " + inputdir)
-    html  = template(inputdir)
+    html  = template()
     
     logging.info("applying template rules from YAML")
     html.add_subst(rules)
     
     mode = 'r' if dryrun else 'w'
     logging.info("saving resulting documents to " + outputdir)
-    html.save(outputdir, mode, diff)
+    html.save(inputdir, outputdir, mode, diff)
     html.clear()
 
 """

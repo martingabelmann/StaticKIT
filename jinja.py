@@ -9,10 +9,8 @@ from difflib import unified_diff
 
 class template:
 
-    def __init__(self, template):
-        self.template      = template
-        self.templatedir   = os.path.abspath(template) if os.path.isdir(template) else os.path.abspath(os.path.dirname(template))
-        self.env           = Environment(loader=FileSystemLoader(self.templatedir),trim_blocks=True)
+    def __init__(self):
+        self.env           = Environment(loader=FileSystemLoader("/"),trim_blocks=True)
         self.substitutions = {}
 
     def add_subst(self, new):
@@ -25,15 +23,16 @@ class template:
         self.substitutions.clear()
         self.env.globals.clear()
 
-    def __savefile(self, filein, fileout, mode, diff):
+    def save(self, filein, fileout, mode='w', diff=False):
         if os.path.isdir(filein):
             if not os.path.isdir(fileout):
                 os.makedirs(fileout)
             for file in os.listdir(filein):
-                sfileout = fileout + '/' + os.path.basename(file)
-                self.__savefile(filein + '/' + file, sfileout, mode, diff)
+                next_fileout = fileout + '/' + file
+                next_filein  = filein + '/'  + file
+                self.save(next_filein, next_fileout, mode, diff)
         else:
-            content = self.env.get_template(os.path.relpath(filein, self.templatedir)).render(self.substitutions)
+            content = self.env.get_template(filein).render(self.substitutions)
             if diff:
                 if os.path.isfile(fileout):
                     before=open(fileout).read().splitlines()
@@ -45,7 +44,3 @@ class template:
             if mode == "w":
                 f = codecs.open(fileout, mode, encoding='utf-8')
                 f.write(content)
-
-    def save(self, fileout, mode='w', diff=False):
-        self.__savefile(self.template, os.path.abspath(fileout), mode, diff)
-
