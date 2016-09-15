@@ -403,6 +403,8 @@ div.infobox-inner a:hover {
 .infobox-ul li a:hover {
     text-decoration:underline;
 }
+
+.infobox .markdown ul,
 .infobox ul {
 /*    list-style-type:none; */
     margin-bottom:-4px;

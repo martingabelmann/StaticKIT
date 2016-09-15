@@ -2,12 +2,6 @@
 
 title: My KIT Homepage
 
-fullname: Max Mustermann
-institute: Institute of ...
-campus: Campus Sued
-building: 30.23
-street: Musterstrasse 24
-phone: 0721 1234567
 mail: max.mustermann@kit.edu
 
 startpage:
@@ -18,9 +12,12 @@ headernavigation:
     - title: HOME
       href: '#start'
       order: 1
+    - title: IMPRESSUM
+      href: 'https://www.kit.edu/impressum.php'
+      order: 2
     - title: KIT
       href: 'https://www.kit.edu'
-      order: 2
+      order: 3
 
 
 navigation:
@@ -36,18 +33,21 @@ showboxes: true
 infobox:
     - title: Example-Box
       text: |
+          <div class="markdown">
           A simple list
-          <ul>
-          <li>item 1</li>
-          <li>another item</li>
-          <li>third item</li>
-          </ul>
-    - title: "{{fullname}}"
+            * item 1
+            * another item
+            * third item
+          </div>
+    - title: "Prof. Dr. Mustermann"
       text: |
-            Karlsruher Institut f&uuml;r Technologie<br />
-            {{institute}}<br />
-            {{campus}}, Geb. {{building}}<br />
-            {{street}}<br />
-            76131 Karlsruhe<br />
-            E-Mail: <a href='mailto:{{mail}}'>{{mail}}</a><br />
-            Phone: {{phone}}
+            <div class="markdown">
+            Beispielinstitut (BI) 
+               
+            Campus S&uuml;d  
+            Geb. 30.23, 11/12  
+            Wolfgang-Gaede-Strasse 1  
+            76131 Karlsruhe 
+               
+            [{{mail}}](mailto:{{mail}})
+            </div>
