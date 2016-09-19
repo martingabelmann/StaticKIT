@@ -46,10 +46,13 @@ function setNavigation(button) {
 function openPage(file) {
     //load content of given file into #content div
     $('#content').load('pages/' + file + '.html', function(){
-            resetNavigation();
-            setNavigation('#' + file);
             
-            document.title = pages[file];
+            if(pages.hasOwnProperty(file)) {
+                resetNavigation();
+                setNavigation('#' + file);
+                document.title = pages[file];
+            }
+
             $(".markdown").each(function() {
                 text = $(this).html();
                 html = converter.makeHtml(text);
@@ -65,9 +68,7 @@ $(document).ready(function(){
       $(window).hashchange( function(){
           var hash = location.hash;
           var file = ( hash.replace( /^#/, '' ) || false )
-          if(pages.hasOwnProperty(file)) {
-              openPage(file);
-          }
+          openPage(file);
       })
       $(window).hashchange();
 });
