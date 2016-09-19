@@ -206,11 +206,22 @@ def main():
         html.add_subst(rules)
         
         mode = 'r' if args.dryrun else 'w'
+
         logging.info("saving resulting documents to " + outputdir)
         print('building html pages from ' + inputdir)
         html.save(inputdir + '/pages', outputdir + '/pages', mode, args.diff)
+        
         print('building homepage from ' + sourcesdir + '/index.html')
         html.save(sourcesdir + '/index.html', outputdir + '/index.html', mode, args.diff)
+        
+        if 'root_templates' in rules and  isinstance(rules['root_templates'], list):
+            print('building extra template files in document root.')
+            for tpl in rules['root_templates']:
+                if not os.path.isfile(inputdir + '/' + tpl):
+                    logging.error('file not found: ' + inputdir + '/' + tpl)
+                    continue
+                html.save(inputdir + '/' + tpl, outputdir + '/' + tpl, mode, args.diff)
+
         html.clear()
 
         if not args.dryrun:
@@ -219,7 +230,7 @@ def main():
                      ['index.html'],
                      args.verbose,
                      args.force)
-
+        print('done!')
 
 """
 run main if this file is executed

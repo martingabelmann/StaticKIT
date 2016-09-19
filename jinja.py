@@ -3,7 +3,6 @@
 
 import os
 import codecs
-import shutil
 from jinja2 import Environment, FileSystemLoader
 from difflib import unified_diff
 

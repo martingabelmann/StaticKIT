@@ -51,3 +51,6 @@ infobox:
                
             [{{mail}}](mailto:{{mail}})
             </div>
+
+root_templates:
+    - .htaccess
