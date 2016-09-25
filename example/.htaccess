@@ -1,1 +1,10 @@
-ErrorDocument 404 "Something went wrong :( (404 page not found)"
+RewriteEngine On
+{% if sheets is defined %}
+{% for dl in sheets %}
+{% if dl.time is defined and dl.file is defined %}
+RewriteCond %{TIME_DAY}%{TIME_MON}%{TIME_YEAR}%{TIME_HOUR}%{TIME_MIN} <{{ dl.time|replace('.','')|replace('-','')|replace(':','') }}
+RewriteRule {{ dl.file }} - [R=404]
+{% endif %}
+
+{% endfor %}
+{% endif %}

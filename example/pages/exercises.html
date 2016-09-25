@@ -1,0 +1,9 @@
+<div class="markdown">
+# &Uuml;bungen
+
+| Aufgaben/Lsgn.| Ausgabe/Besprechung | Bemerkung         |
+|:------------- |:------------ |:----------------- |
+{% for sheet in sheets %}
+| [{{sheet.file|default(" ")|replace('pdf/','')|replace('.pdf','') }}]({{sheet.file|default(" ")}})   | {{sheet.time|default(" ")}} | {{ sheet.note|default(" ")}} |
+{% endfor %}
+</div>

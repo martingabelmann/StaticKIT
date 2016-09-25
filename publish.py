@@ -6,7 +6,7 @@ import os
 from shutil import copy2, copystat
 import argparse
 import logging
-import time
+from datetime import datetime
 import re
 import sys
 
@@ -189,13 +189,14 @@ def main():
             logging.info("parsing config.yml for YAML")
             rules = yaml.load(stream)
             rules = parse_vars(rules)
-        except:
+        except Exception as e:
             # TODO raise typical yaml exceptions
             logging.error("config.yml seems not to be a valid yaml file.")
+            logging.error(e)
             exit(1)
         
         logging.debug("setting additional template variables")
-        rules.update({'date':time.strftime("%d/%m/%Y")})    
+        rules.update({'date': datetime.now() })    
    
         logging.debug("using YAML structure:\n+++++\n" + yaml.dump(rules) + "+++++")
 

@@ -1,43 +1,52 @@
 ---
 
-title: My KIT Homepage
-
+title: Lecture example
 mail: max.mustermann@kit.edu
 
 startpage:
     file: start
-    title: Homepagetitle
+    title: "{{title}}"
 
 headernavigation:
     - title: HOME
       href: '#start'
       order: 1
+    - title: your institute name
+      href: 'https://url to your institute'
+      order: 2
     - title: IMPRESSUM
       href: 'https://www.kit.edu/impressum.php'
-      order: 2
+      order: 3
     - title: KIT
       href: 'https://www.kit.edu'
-      order: 3
+      order: 4
 
 
 navigation:
     - file: start
-      title: Startseite
+      title: Vorlesung
       order: 1
-    - file: example
-      title: Example Page
+    - file: exercises
+      title: Tutorien
       order: 2
 
 
 showboxes: true
 infobox:
-    - title: Example-Box
+    - title: Vorlesung
       text: |
           <div class="markdown">
-          A simple list
-            * item 1
-            * another item
-            * third item
+          Lehmann-H&ouml;rsaal
+            * Mo, 09:45 - 11:15
+            * Do, 08:00 - 09:30
+          </div>
+    - title: "&Uuml;bung"
+      text: |
+          <div class="markdown">
+          Lehmann-H&ouml;rsaal
+            * Di, 15:45 - 17:15
+            * Abgabe nicht erforderlich
+            * Bearbeitung empfohlen
           </div>
     - title: "Prof. Dr. Mustermann"
       text: |
@@ -51,6 +60,22 @@ infobox:
                
             [{{mail}}](mailto:{{mail}})
             </div>
+
+# list of exercise sheets/pdfs/tutorials you wanna 
+# publish at certain dates
+# the "file" is read protected via .htaccess until
+# "time" (server time of apache) is reached
+sheets:
+    - file: pdf/blatt01.pdf
+      time: 20.10.2015-07:00
+      note: "Hinweis Aufgabe 2: Skript Kapitel 5"
+    - file: pdf/loesung01.pdf
+      time: 03.11.2015-13:00
+    - file: pdf/blatt02.pdf
+      time: 03.11.1015-07:00
+    - file: pdf/loesung02.pdf
+      time: 10.11.2015-13:30
+      note: "Tutorien beginnen 30 Minuten sp&auml;ter"
 
 root_templates:
     - .htaccess

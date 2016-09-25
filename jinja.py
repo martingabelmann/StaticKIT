@@ -5,12 +5,21 @@ import os
 import codecs
 from jinja2 import Environment, FileSystemLoader
 from difflib import unified_diff
+from datetime import datetime
+
+def datetimeformat(value, format='%d.%m.%Y %H:%M'):
+    return value.strftime(format)
+
+def todatetime(value, format='%d.%m.%Y'):
+     return datetime.strptime(value, format)
 
 class template:
 
     def __init__(self):
         self.env           = Environment(loader=FileSystemLoader("/"),trim_blocks=True)
         self.substitutions = {}
+        self.env.filters['datetimeformat'] = datetimeformat
+        self.env.filters['todatetime'] = todatetime
 
     def add_subst(self, new):
         self.substitutions.update(new)
