@@ -326,7 +326,7 @@ div#left-row {
 }
 /* Mittlere Spalte (Content) */
 div#middle-row {
-font-size: 1em
+    font-size: 1em;
     background-color:#fff;
     padding:10px;
     margin:0 10px 10px 0;
@@ -557,7 +557,7 @@ div.markdown ul {
 }
 div.text ul li, 
 div.markdown ul li {
-    list-style-image: url(img/greendot.png);
+    list-style-image: url(img/greendot.gif);
 }
 div.text ol {
     margin-left: 3em;
@@ -1060,20 +1060,31 @@ table.tabelle2 .themen li {
 }
 /* Tabelle 3 */
 table.tabelle3,
-table.markdown {
+.markdown table {
     color:#000000;
     line-height:1.3em;
     margin-bottom:10px;
     width:564px;
+    border-spacing: 0px;
+    border-collapse: separate;
 }
-table.tabelle3 th,
-table.markdown th {
+table.tabelle3 th {
     background-color:#e5e5e5;
     color:#000000;
     padding:4px 5px 5px;
     text-align:left;
     vertical-align:bottom;
 }
+.markdown tbody tr:hover td {
+    background-color:#d9efec;
+}
+.markdown tbody tr:nth-child(odd) {
+    background: #E5E5E5;
+}
+.markdown tbody tr:nth-child(even) {
+    background: #FFFFFF;
+}
+
 table.tabelle3 .row1 {
     width:130px;
 }
@@ -1094,14 +1105,16 @@ table.tabelle3 .link {
     vertical-align:top;
 /*    width:125px;*/
 }
-table.tabelle3 .link a:link,table.tabelle3 .link a:active,table.tabelle3 .link a:visited {
+table.tabelle3 .link a:link,table.tabelle3 .link a:active,table.tabelle3 .link a:visited, 
+.markdown table .link a:link,.markdown table .link a:active,.markdown table .link a:visited {
     font-weight:700;
     background:url(img/intern/arrow_dunkelgruen.gif) 0 .36em no-repeat;
     color:#009682;
     /* display:block; */
     padding-left:5px;
 }
-table.tabelle3 .link a:hover {
+table.tabelle3 .link a:hover ,
+.markdown table .link a:hover {
     text-decoration:underline;
 }
 table.tabelle3 .normal {
@@ -1131,14 +1144,15 @@ table.tabelle3 .hover {
     background-color:#d9efec;
 }
 /* Fuer alle Tabelle[n] Tabellen */
-caption {
+caption,
+.markdown table thead {
     background-color:#808080;
     border-bottom:1px #fff solid;
     color:#fff;
     font-weight:700;
     height:auto;
     line-height:20px;
-    padding:0 6px;
+    padding: 6px;
     text-align:left;
 }
 /* Kein Border */
@@ -1444,7 +1458,8 @@ table.kalender .today a {
 /* Kalender */
 /*Listenansicht*/
 /* Hintergrundfarbe für Tabelle oben*/
-.tabelle3 caption#green{
+.tabelle3 caption#green,
+.markdown caption#green{
     background-color:#009682;
     border-bottom:1px #fff solid;
     color:#fff;
@@ -1478,6 +1493,7 @@ div#time{
     margin-bottom:15px;
 }
 /*Formatierung für der Tabellenspalte*/
+.markdown table td,
 table.tabelle3 td{
     padding:5px 5px 5px 2px;
     text-align:left;
@@ -1908,15 +1924,13 @@ a#is-current {
 font-weight:700 !important;
 }
 /* Tabelle allgemein */
-.text table,
-.markdown table {
+.text table {
     color:#000000;
     border-color: #b3b3b3;
     margin-bottom:10px;
 /*    width:564px; */
 }
-.text table th,
-.markdown table th {
+.text table th {
     background-color:#e5e5e5;
     border-color: #b3b3b3;
     color:#000000;
@@ -1924,8 +1938,7 @@ font-weight:700 !important;
     text-align:left;
 /*    vertical-align:bottom; */
 }
-.text table td,
-.markdown table td {
+.text table td {
 /*    border-bottom:1px #b3b3b3 solid; */
     border-color: #b3b3b3;
     padding:4px 0 4px 5px;
@@ -2468,11 +2481,12 @@ div#suchen input#submit {
     div#middle-row {
         float:left;
     }
-    div#middle-row, table.tabelle3, table.ptabelle, table.ptabelleblank, table.datentabelle {
+    div#middle-row, table.tabelle3, table.ptabelle, table.ptabelleblank, table.datentabelle, .markdown table {
         width:98% !important;
         margin: 0 1%;
         padding:0;
     }
+    .markdown table img ,
     table.tabelle3 img {
         max-width: 100%;
     }
@@ -2809,12 +2823,13 @@ div#suchen input#submit {
     div#middle-row {
         float:left;
     }
-    div#middle-row, table.tabelle3, table.ptabelle, table.ptabelleblank, table.datentabelle {
+    div#middle-row, table.tabelle3, table.ptabelle, table.ptabelleblank, table.datentabelle, .markdown table {
         width:100% !important;
         margin: 0;
         padding:0;
     }
 
+    .markdown table img ,
     table.tabelle3 img {
         max-width: 100%;
     }
