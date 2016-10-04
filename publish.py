@@ -129,9 +129,14 @@ def copytree(src, dst, ignore=[], verbose=0, force=False):
                     continue
             if verbose > 0:
                 print('copying ' + srcname + ' to ' + dstname)
-            copy2(srcname, dstname)
-    copystat(src, dst)
-
+            try:
+                copy2(srcname, dstname)
+            except FileNotFoundError:
+                logging.error(srcname + ' not found')
+    try:
+        copystat(src, dst)
+    except FileNotFoundError:
+        logging.error(srcname + ' not found')
 
 """
 initialize a new project
@@ -145,6 +150,16 @@ def init(dest, dryrun=False, force=False):
         print("copying example project to " + dest)
         copytree(os.path.dirname(os.path.abspath(__file__)) + '/example', dest, [], force)
 
+"""
+ckeck if a path exists
+"""
+def ispath(path):
+    path = os.path.abspath(path)
+    if os.path.exists(path):
+        return path
+    else:
+        logging.error(path + ' does not exists')
+        return False
 
 """
 load YAML rules from file
@@ -153,7 +168,7 @@ and build htmls wih jinja2
 def main():
     args = parser.parse_args()
 
-    logging.basicConfig(format='%(levelname)s:%(message)s')
+    logging.basicConfig(format='%(levelname)s: %(message)s')
     if args.verbose == 0:
         logging.getLogger().setLevel(logging.ERROR) 
     elif args.verbose == 1:
@@ -164,10 +179,13 @@ def main():
     else:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    inputdir   = os.path.abspath(args.inputdir)
+    inputdir   = ispath(args.inputdir)
+    pagesdir   = ispath(args.inputdir + '/pages')
     outputdir  = os.path.abspath(args.outputdir)
-    configfile = os.path.abspath(args.inputdir + '/config.yml')
-    sourcesdir = os.path.dirname(os.path.abspath(__file__)) + '/sources'
+    configfile = ispath(args.inputdir + '/config.yml')
+    sourcesdir = ispath(os.path.dirname(os.path.abspath(__file__)) + '/sources')
+
+
 
     if args.init:
         init(args.init, args.dryrun, args.force)
@@ -200,21 +218,24 @@ def main():
    
         logging.debug("using YAML structure:\n+++++\n" + yaml.dump(rules) + "+++++")
 
-        logging.info("loading template(s) " + inputdir)
-        html  = template()
-        
         logging.info("applying template rules from YAML")
+        html  = template()
         html.add_subst(rules)
         
         mode = 'r' if args.dryrun else 'w'
+        
+        if pagesdir:
+            logging.info("saving resulting documents to " + outputdir)
+            print('building html pages from ' + inputdir)
+            html.save(pagesdir, outputdir + '/pages', mode, args.diff)
+        
+        if sourcesdir and ispath(sourcesdir + '/index.html'):
+            print('building homepage from ' + sourcesdir + '/index.html')
+            html.save(sourcesdir + '/index.html', outputdir + '/index.html', mode, args.diff)
+        else: 
+            logging.error('cannot create an index.html')
+            exit(1)
 
-        logging.info("saving resulting documents to " + outputdir)
-        print('building html pages from ' + inputdir)
-        html.save(inputdir + '/pages', outputdir + '/pages', mode, args.diff)
-        
-        print('building homepage from ' + sourcesdir + '/index.html')
-        html.save(sourcesdir + '/index.html', outputdir + '/index.html', mode, args.diff)
-        
         if 'root_templates' in rules and  isinstance(rules['root_templates'], list):
             print('building extra template files in document root.')
             for tpl in rules['root_templates']:
@@ -225,7 +246,7 @@ def main():
 
         html.clear()
 
-        if not args.dryrun:
+        if not args.dryrun and sourcesdir:
             copytree(sourcesdir,
                      outputdir, 
                      ['index.html'],
