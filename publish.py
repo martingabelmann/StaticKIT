@@ -242,9 +242,21 @@ def main():
                 if not os.path.isfile(inputdir + '/' + tpl):
                     logging.error('file not found: ' + inputdir + '/' + tpl)
                     continue
-                html.save(inputdir + '/' + tpl, outputdir + '/' + tpl, mode, args.diff)
+                if not args.dryrun:
+                    html.save(inputdir + '/' + tpl, outputdir + '/' + tpl, mode, args.diff)
 
         html.clear()
+
+        if 'copy_files' in rules and  isinstance(rules['copy_files'], list):
+            print('copying extra files')
+            for f in rules['copy_files']:
+                i = inputdir + '/' + f
+                o = outputdir + '/' + f
+                if os.path.isdir(i) and not args.dryrun:
+                    copytree(i, o, [],  args.verbose, args.force)
+                elif os.path.isfile(i) and not args.dryrun:
+                    copy2(i, o)
+
 
         if not args.dryrun and sourcesdir:
             copytree(sourcesdir,
@@ -252,6 +264,7 @@ def main():
                      ['index.html'],
                      args.verbose,
                      args.force)
+
         print('done!')
 
 """

@@ -79,3 +79,6 @@ sheets:
 
 root_templates:
     - .htaccess
+
+copy_files:
+    - img
