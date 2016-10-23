@@ -1,0 +1,23 @@
+branches:
+  except:
+    - gh-pages
+
+language: python
+
+python:
+  - 3.3
+  - 3.5
+
+install:
+  - which pip3 && which python3 && pip install -r requirements.txt
+  - git remote set-url origin git@github.com:particleKIT/StaticKIT.git
+  - git clone -b gh-pages git@github.com:particleKIT/StaticKIT.git gh-pages || mkdir gh-pages
+
+script:
+  - python3 ./publish.py --input example --output gh-pages -fvv
+
+after_script:
+  - cd gh-pages
+  - git add .;
+  - git commit -m "Shippable commit"
+  - if [ "$?" == "0" ] && [ "$(which python3)" == "/root/venv/3.5/bin/python3" ]; then git push origin gh-pages ; fi
