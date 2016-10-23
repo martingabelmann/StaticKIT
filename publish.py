@@ -103,6 +103,9 @@ dst:    destination directory
 ignore: list of ignored files/dirs
 """
 def copytree(src, dst, ignore=[], verbose=0, force=False):
+    if os.path.isdir(src) and not os.path.exists(dst):
+        os.makedirs(dst)
+
     names = os.listdir(src)
     for name in names:
         if name in ignore:
