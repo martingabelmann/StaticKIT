@@ -49,7 +49,7 @@ function openPage(file) {
             
             if(pages.hasOwnProperty(file)) {
                 resetNavigation();
-                setNavigation('#' + file);
+                setNavigation('#li_' + file);
                 document.title = pages[file];
             }
 
@@ -109,7 +109,7 @@ $(document).ready(function(){
                     <div id="menu-box">
 <ul>
     {% for entry in navigation|sort(attribute='order') %}
-    <li class="li_level_1_not_selected" id="{{entry.file}}"><a class="level_1_not_selected" href="#{{entry.file}}">{{entry.title}}</a></li>
+    <li class="li_level_1_not_selected" id="li_{{entry.file}}"><a class="level_1_not_selected" href="#{{entry.file}}">{{entry.title}}</a></li>
     {% endfor %}
 </ul><br/> 
 </div>
