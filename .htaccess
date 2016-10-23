@@ -1,0 +1,13 @@
+RewriteEngine On
+RewriteCond %{TIME_DAY}%{TIME_MON}%{TIME_YEAR}%{TIME_HOUR}%{TIME_MIN} <201020150700
+RewriteRule pdf/blatt01.pdf - [R=404]
+
+RewriteCond %{TIME_DAY}%{TIME_MON}%{TIME_YEAR}%{TIME_HOUR}%{TIME_MIN} <031120151300
+RewriteRule pdf/loesung01.pdf - [R=404]
+
+RewriteCond %{TIME_DAY}%{TIME_MON}%{TIME_YEAR}%{TIME_HOUR}%{TIME_MIN} <031110150700
+RewriteRule pdf/blatt02.pdf - [R=404]
+
+RewriteCond %{TIME_DAY}%{TIME_MON}%{TIME_YEAR}%{TIME_HOUR}%{TIME_MIN} <101120151330
+RewriteRule pdf/loesung02.pdf - [R=404]
+
