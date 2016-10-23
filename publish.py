@@ -179,17 +179,16 @@ def main():
     else:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    inputdir   = ispath(args.inputdir)
-    pagesdir   = ispath(args.inputdir + '/pages')
-    outputdir  = os.path.abspath(args.outputdir)
-    configfile = ispath(args.inputdir + '/config.yml')
-    sourcesdir = ispath(os.path.dirname(os.path.abspath(__file__)) + '/sources')
-
-
 
     if args.init:
         init(args.init, args.dryrun, args.force)
     else:
+        sourcesdir = ispath(os.path.dirname(os.path.abspath(__file__)) + '/sources')
+        inputdir   = ispath(args.inputdir)
+        pagesdir   = ispath(args.inputdir + '/pages')
+        outputdir  = os.path.abspath(args.outputdir)
+        configfile = ispath(args.inputdir + '/config.yml')
+
         logging.debug("input location: " + inputdir)
         logging.debug("output location: " + outputdir) 
         logging.debug("using config file from: " + configfile)
