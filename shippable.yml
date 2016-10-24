@@ -19,5 +19,7 @@ script:
 after_script:
   - cd gh-pages
   - git add .;
+  - git config --get user.name || git config user.name 'Shippable Build'
+  - git config --get user.email || git config user.email 'build@shippable.com'
   - git commit -m "Shippable commit"
   - if [ "$?" == "0" ] && [ "$(which python3)" == "/root/venv/3.5/bin/python3" ]; then git push origin gh-pages ; fi
