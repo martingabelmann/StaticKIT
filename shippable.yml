@@ -10,7 +10,6 @@ python:
 
 install:
   - which pip3 && which python3 && pip install -r requirements.txt
-  - git remote set-url origin git@github.com:particleKIT/StaticKIT.git
   - git clone -b gh-pages git@github.com:particleKIT/StaticKIT.git gh-pages || mkdir gh-pages
 
 script:
