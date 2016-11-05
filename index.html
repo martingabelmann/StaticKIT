@@ -21,8 +21,9 @@ converter.setOption('tables', true);
 converter.setOption('parseImgDimensions', true);
 
 var pages = {}
-pages['start']= 'Vorlesung';
-pages['exercises']= 'Tutorien';
+pages['start']= 'StaticKIT';
+pages['quick']= 'Quickstart';
+pages['advanced']= 'Advanced';
 
 
 function resetNavigation() {
@@ -66,7 +67,7 @@ $(document).ready(function(){
       // trigger openpage when hash changes
       $(window).hashchange( function(){
           var hash = location.hash;
-          var file = ( hash.replace( /^#/, '' ) || false )
+          var file = ( hash.replace( /^#/, '' ) || 'start' )
           openPage(file);
       })
       $(window).hashchange();
@@ -76,26 +77,27 @@ $(document).ready(function(){
 
 
 
-<title>Lecture example</title>
+<title></title>
 </head>
     <body>
         <div id="wrapper">
             <div id="metanavigation">
 
-    <a href="#start">HOME</a> |    <a href="https://url to your institute">your institute name</a> |    <a href="https://www.kit.edu/impressum.php">IMPRESSUM</a> |    <a href="https://www.kit.edu">KIT</a>             </div>
+    <a href="#start">HOME</a> |    <a href="https://github.com/particleKIT/StaticKIT">GITHUB</a> |    <a href="https://www.kit.edu/impressum.php">IMPRESSUM</a> |    <a href="https://www.kit.edu">KIT</a>             </div>
             
             <div id="head">
                 <div id="logo"><a href="http://www.kit.edu" title="KIT-Logo - Link zur KIT-Startseite"><img src="img/intern/kit_logo_V2_de.png" alt="KIT-Logo - Link zur KIT-Startseite"></a></div>
                 <div id="head-image" style="background-image:url('img/logo.jpg')">
-                    <div id="head-text" class="big_font">Lecture example</div><div id="head-text-corner">&nbsp;</div>                </div>
+                    <div id="head-text" class="big_font">StaticKIT</div><div id="head-text-corner">&nbsp;</div>                </div>
             </div>
             <div class="spacer"></div>
             <div id="container">
                 <div id="left-row">
                     <div id="menu-box">
 <ul>
-        <li class="li_level_1_not_selected" id="li_start"><a class="level_1_not_selected" href="#start">Vorlesung</a></li>
-        <li class="li_level_1_not_selected" id="li_exercises"><a class="level_1_not_selected" href="#exercises">Tutorien</a></li>
+        <li class="li_level_1_not_selected" id="li_start"><a class="level_1_not_selected" href="#start">StaticKIT</a></li>
+        <li class="li_level_1_not_selected" id="li_quick"><a class="level_1_not_selected" href="#quick">Quickstart</a></li>
+        <li class="li_level_1_not_selected" id="li_advanced"><a class="level_1_not_selected" href="#advanced">Advanced</a></li>
     </ul><br/> 
 </div>
 </div>
@@ -104,42 +106,41 @@ $(document).ready(function(){
             <div class="infobox">
         <div class="infobox-inner">
             <div class="padding4"><b> </b></div>
-            <h2>Vorlesung</h2>
-            <p><div class="markdown">
-Lehmann-H&ouml;rsaal
-  * Mo, 09:45 - 11:15
-  * Do, 08:00 - 09:30
-</div>
+            <h2>Get the source</h2>
+            <p><script async defer src="https://buttons.github.io/buttons.js"></script>
+<center>
+<a class="github-button" href="https://github.com/particlekit/StaticKIT/archive/master.zip" data-style="mega" aria-label="Download particlekit/StaticKIT on GitHub">Download</a>
+</center>
 </p>
             </div>
         </div>
         <div class="infobox">
         <div class="infobox-inner">
             <div class="padding4"><b> </b></div>
-            <h2>&Uuml;bung</h2>
-            <p><div class="markdown">
-Lehmann-H&ouml;rsaal
-  * Di, 15:45 - 17:15
-  * Abgabe nicht erforderlich
-  * Bearbeitung empfohlen
-</div>
+            <h2>Report</h2>
+            <p><center>
+<a class="github-button" href="https://github.com/particlekit/StaticKIT/issues" data-style="mega" aria-label="Issue particlekit/StaticKIT on GitHub">Issue</a>
+</center>
 </p>
             </div>
         </div>
         <div class="infobox">
         <div class="infobox-inner">
             <div class="padding4"><b> </b></div>
-            <h2>Prof. Dr. Mustermann</h2>
-            <p><div class="markdown">
-Beispielinstitut (BI) 
-   
-Campus S&uuml;d  
-Geb. 30.23, 11/12  
-Wolfgang-Gaede-Strasse 1  
-76131 Karlsruhe 
-   
-[max.mustermann@kit.edu](mailto:max.mustermann@kit.edu)
-</div>
+            <h2>Like it</h2>
+            <p><center>
+<a class="github-button" href="https://github.com/particlekit/StaticKIT" data-style="mega" aria-label="Star particlekit/StaticKIT on GitHub">Star</a>
+</center>
+</p>
+            </div>
+        </div>
+        <div class="infobox">
+        <div class="infobox-inner">
+            <div class="padding4"><b> </b></div>
+            <h2>Contribute</h2>
+            <p><center>
+<a class="github-button" href="https://github.com/particlekit/StaticKIT/fork" data-style="mega" aria-label="Fork particlekit/StaticKIT on GitHub">Fork</a>
+</center>
 </p>
             </div>
         </div>
@@ -164,7 +165,7 @@ Wolfgang-Gaede-Strasse 1
                         </div>
                     </div>
                     <div id="owner">
-                        <span id="owner-text" style="float:right; margin-right:31px">letzte &Auml;nderung: 05.11.2016 17:29</span>
+                        <span id="owner-text" style="float:right; margin-right:31px">letzte &Auml;nderung: 05.11.2016 21:43</span>
                     <span id="owner-text">KIT – Die Forschungsuniversit&auml;t in der Helmholtz-Gemeinschaft</span></div>
                 </div>
             </div>
