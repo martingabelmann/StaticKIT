@@ -1,0 +1,57 @@
+---
+
+title: StaticKIT
+
+repo: https://github.com/particleKIT/StaticKIT
+
+startpage:
+    file: start
+
+headernavigation:
+    - title: HOME
+      href: '#start'
+      order: 1
+    - title: GITHUB
+      href: '{{repo}}'
+      order: 2
+    - title: IMPRESSUM
+      href: 'https://www.kit.edu/impressum.php'
+      order: 3
+    - title: KIT
+      href: 'https://www.kit.edu'
+      order: 4
+
+navigation:
+    - file: start
+      title: StaticKIT
+      order: 1
+    - file: quick
+      title: Quickstart
+      order: 2
+    - file: advanced
+      title: Advanced
+      order: 3
+
+showboxes: true
+infobox:
+    - title: Get the source
+      text: |
+            <script async defer src="https://buttons.github.io/buttons.js"></script>
+            <center>
+            <a class="github-button" href="https://github.com/particlekit/StaticKIT/archive/master.zip" data-style="mega" aria-label="Download particlekit/StaticKIT on GitHub">Download</a>
+            </center>
+    - title: Report
+      text: |
+            <center>
+            <a class="github-button" href="https://github.com/particlekit/StaticKIT/issues" data-style="mega" aria-label="Issue particlekit/StaticKIT on GitHub">Issue</a>
+            </center>
+    - title: Like it
+      text: |
+            <center>
+            <a class="github-button" href="https://github.com/particlekit/StaticKIT" data-style="mega" aria-label="Star particlekit/StaticKIT on GitHub">Star</a>
+            </center>
+    - title: Contribute
+      text: |
+            <center>
+            <a class="github-button" href="https://github.com/particlekit/StaticKIT/fork" data-style="mega" aria-label="Fork particlekit/StaticKIT on GitHub">Fork</a>
+            </center>

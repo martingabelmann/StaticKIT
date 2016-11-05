@@ -1,0 +1,53 @@
+<div class="markdown">
+# Documentation
+## Infobox
+You can add additional infoboxes on the right side of the page. Fill the ``infobox`` dict with appropriate informations, every new subdict (starting with a ``-``) marks a new infobox:
+```yaml
+infobox:
+    - title: Info-Box
+      text: "A simple list
+          <ul>
+          <li>item 1</li>
+          <li>another item</li>
+          <li>third item</li>
+          </ul>
+          "
+    - title: Info-Box2
+      text: "another infobox"
+```
+If you need more space and dont want to show the right column at all, simply set the ``showboxes: false`` variable the config.yml. 
+
+## Linking your pages
+Loading page content from specific files under ``/pages/*.html`` is triggered by appending a ``#filename`` (without .html extension) in the addressbar. Thus you can give others a link to one of your pages by copy&paste the resulting url from the navigation/browser address bar.
+
+
+## Recycling variables
+People using ansible (which mixes yaml and jinja2) may be confused, because standalone YAML does not come with a feature to concatenate variables.
+However, we introduced a simple variable parser that replaces ``{{vars}}`` with their values. So far it is only possible to replace with simple vars, no list/dict items. E.g:
+```yaml
+mail: my@email.de
+text: 'contact me at {{mail}}'
+```
+will lead to the desired result.
+
+## Markdown
+You can use Githubs markdown ([showdown](https://github.com/showdownjs/showdown) stricly speaking) when encapsulated in a div with the ``markdown`` class:
+```html
+<div class="markdown">
+#this is a markdown page
+we can use 
+ * lists, 
+ * _tables_, 
+ * **formatting**
+ * ...
+here
+</div>
+```
+For a detailed markdown description see the [showdown wiki syntax page](https://github.com/showdownjs/showdown/wiki/Showdown's-Markdown-syntax).
+
+## placing Jinja2 templates outside of the pages/ directory
+Sometimes it is useful to have other files as an template, too (e.g. for an .htaccess). Create a list ``root_templates`` in the config.yml and fill it with filenames relative to the document root (~/.public_html/). See the example project (``publish --init ~/projectpath``) for an explicit demonstration.
+
+## copying static files with publish
+Binaries and non-template files could in general directly placed into ``~/.public_html`` without informing ``publish`` about it. However, one might want to organize its template files within a version control system and/or want the whole webpage (including binarie content e.g. pdf downloads) reproduced by executing ``publish -o ~/.public_html`` while ~/.public_html is empty.
+</div>

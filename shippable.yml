@@ -13,10 +13,7 @@ install:
   - git clone -b gh-pages git@github.com:particleKIT/StaticKIT.git gh-pages || mkdir gh-pages
 
 script:
-  - echo "<div class='markdown'>" > example/pages/start.html
-  - cat README.md >> example/pages/start.html
-  - echo "</div>" >> example/pages/start.html
-  - python3 ./publish.py --input example --output gh-pages -fvv
+  - python3 ./publish.py --input init/docs --output gh-pages -fvv
 
 after_script:
   - cd gh-pages

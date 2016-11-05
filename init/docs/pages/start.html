@@ -1,0 +1,15 @@
+<div class="markdown">
+# Build your KIT .public_html webpage
+
+This is a minimalistic and lightweight workframe for adopting the official KIT website design with static HTML pages and jQuery.
+All the configurations come within one simple [config.yml]({{repo}}/blob/master/init/docs/config.yml). Content of pages is separated in single [files]({{repo}}/tree/master/init/docs/pages/).
+The resulting pages are build from jinja2 templates with a simple python run.
+
+## Requirements
+ * python3 (python3-jinja2, python3-yaml),
+ * a webserver with .htaccess support (optional).
+
+## Usecases
+Many institutes at the KIT provide a ``.public_html`` directory in the homedir of their members. There you can put static htmls only. Mostly, this leads to a chaos of many html files... 
+The intention of this project is, to have a minimalistic framework for building simple website structures without batteling with thousands of html files and just concentrating on the content.
+</div>

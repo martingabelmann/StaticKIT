@@ -67,7 +67,7 @@ $(document).ready(function(){
       // trigger openpage when hash changes
       $(window).hashchange( function(){
           var hash = location.hash;
-          var file = ( hash.replace( /^#/, '' ) || false )
+          var file = ( hash.replace( /^#/, '' ) || '{{startpage.file}}' )
           openPage(file);
       })
       $(window).hashchange();

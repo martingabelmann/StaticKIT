@@ -1,0 +1,18 @@
+<div class="markdown">
+# Quickstart
+* get a clone of this repository: ``git clone https://github.com/particleKIT/StaticKIT.git``, optionally symlink the [./publish.py]({{repo}}/blob/master/publish.py) into a place withn your ``$PATH`` (e.g. ~/bin).
+* initialize a new lecture template project with ``publish --init ~/.private_html lecture``
+* for every page/template that makes use of variables/jinja2 syntax create a ``.html`` file at ``~/.private_html/pages/`` and fill it with your (html or markdown) content,
+* every page that should be shown in the navigation needs an entry in the ``~/.private_html/config.yml``, the syntax is as follows: 
+  
+  ```yaml
+   navigation:
+        - file: filename (without html extension)
+          title: filetitle (the name shown in the navigation)
+          order: 1  (the position of the page in the navigation)
+  ```
+  
+* run ``publish --input ~/.private_html --output ~/.public_html``
+* thats it! The complete page is navigated from the newly created ``index.html``, all the jinja templates are proccessed with the objects from the config.yml.
+* also have a look at the output of ``publish --help``
+</div>
