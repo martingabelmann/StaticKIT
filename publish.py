@@ -44,7 +44,8 @@ parser.add_argument('--outputdir',
                     help='destination directory for static html website (defaults to ~/.public_html)')
 
 parser.add_argument('--init',
-    		        '-ii',
+    		    '-ii',
+                    nargs='*',
                     help='initialize a new project at directory INIT')
 
 parser.add_argument('--diff',
@@ -146,12 +147,16 @@ initialize a new project
 dest: destination where the project is initialized
 """
 def init(dest, dryrun=False, force=False):
-    if os.path.isdir(dest) and os.listdir!="" and not force:
-        logging.error('directory ' + dest + ' already exists and is not empty!')
+    if len(dest) != 2 or not os.path.isdir(os.path.dirname(os.path.abspath(__file__)) + '/init/' + dest[1]):
+        logging.error('--init takes two arguments: [destination directory] [project type]')
+        logging.error('The following project types are available:\n' + '\n'.join(os.listdir(os.path.dirname(os.path.abspath(__file__)) + '/init/')))
+        exit(1)
+    if os.path.isdir(dest[0]) and os.listdir(dest[0]) !="" and not force:
+        logging.error('directory ' + dest[0] + ' already exists and is not empty!')
         exit(1)
     if not dryrun:
-        print("copying example project to " + dest)
-        copytree(os.path.dirname(os.path.abspath(__file__)) + '/example', dest, [], force)
+        print("copying " + dest[1] +  " project to " + dest[0])
+        copytree(os.path.dirname(os.path.abspath(__file__)) + '/init/' + dest[1], dest[0], [], force)
 
 """
 ckeck if a path exists
