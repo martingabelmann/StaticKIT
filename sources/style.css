@@ -2459,7 +2459,7 @@ div#suchen input#submit {
         width:100%;
     }
     #menu-box .li_level_1_selected_children, #menu-box .li_level_1_selected_no_children {
-        background-image: none;
+        background: none;
         width: 47%;
         margin-left:2%;
     }
@@ -2804,7 +2804,7 @@ div#suchen input#submit {
         width:100%;
     }
     #menu-box .li_level_1_selected_children, #menu-box .li_level_1_selected_no_children {
-        background-image: none;
+        background: none;
         width: 47%;
         margin-left:2%;
     }
