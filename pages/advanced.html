@@ -25,10 +25,10 @@ Loading page content from specific files under ``/pages/*.html`` is triggered by
 People using ansible (which mixes yaml and jinja2) may be confused, because standalone YAML does not come with a feature to substitute variables/strings.
 However, we introduced a simple variable parser that treats YAML strings within the config.yml as Jinja templates:
 ```yaml
-mail: my@email.de
-text: 'contact me at '
+mail: "my@email.de"
+text: "contact me at {{mail}}"
 ```
-will lead to the desired result.
+will lead to the desired result (i.e. "contact me at my@email.de").
 
 ## Markdown
 You can use Githubs markdown ([showdown](https://github.com/showdownjs/showdown) stricly speaking) when encapsulated in a div with the ``markdown`` class:
