@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from jinja import template
+from jinja import template, Template
 import yaml
 import os
 from shutil import copy2, copystat
@@ -54,8 +54,8 @@ parser.add_argument('--diff',
                     help='show a simple diff between edited files')
 
 """
-variable substitions in yaml files
-reuse variables with {{variablename}} within other objects
+basic variable substitions in 
+yaml files using jinja2
 """
 def parse_vars(yamlin):
     # save the initial object
@@ -72,30 +72,13 @@ def parse_vars(yamlin):
         yamlout={}
         for sub in yamlin:
             yamlout[sub] = parse_vars(yamlin[sub])
-
-    # replace {{vars}} in strings with their values
+    # treat each string as jinja template
     elif isinstance(yamlin, str):
-        foundvars=re.findall('{{(.*?)}}', yamlin)
-        if len(foundvars)>0:
-            yamlout=''
-            for var in foundvars:
-                inline_var = '{{' + var + '}}'
-                if var in global_yaml:
-                    yamlin = yamlin.replace(inline_var, str(global_yaml[var]))
-                else:
-                    print('{{' + var + '}} is not defined')
-                    sys.exit(0)
-            yamlout = yamlin
-        else:
-            yamlout = yamlin
-
+        yamlout = Template(yamlin).render(global_yaml)
     # be sure nothing gets lost
     else:
         yamlout = yamlin
-
     return yamlout
-
-
 
 """
 anotherversion of copytree
@@ -211,9 +194,10 @@ def main():
             exit(1)
 
         try:
-            logging.info("parsing config.yml for YAML")
+            logging.info("parsing config.yml")
             rules = yaml.load(stream)
-            rules = parse_vars(rules)
+            for i in range(len(rules)): # do this to catch sub definitions
+                rules = parse_vars(rules)
         except Exception as e:
             # TODO raise typical yaml exceptions
             logging.error("config.yml seems not to be a valid yaml file.")

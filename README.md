@@ -3,7 +3,7 @@
 
 ___
 This is a minimalistic and lightweight workframe for adopting the official KIT website design with static HTML pages and jQuery.
-All the configurations come within one simple [config.yml](example/config.yml). Content of pages is separated in single [files](example/pages/).
+All the configurations come within one simple [config.yml](init/docs/config.yml). Content of pages is separated in single [files](init/docs/pages/).
 The resulting pages are build from jinja2 templates with a simple python run.
 ___
  

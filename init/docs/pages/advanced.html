@@ -22,8 +22,8 @@ Loading page content from specific files under ``/pages/*.html`` is triggered by
 
 
 ## Recycling variables
-People using ansible (which mixes yaml and jinja2) may be confused, because standalone YAML does not come with a feature to concatenate variables.
-However, we introduced a simple variable parser that replaces ``{{vars}}`` with their values. So far it is only possible to replace with simple vars, no list/dict items. E.g:
+People using ansible (which mixes yaml and jinja2) may be confused, because standalone YAML does not come with a feature to substitute variables/strings.
+However, we introduced a simple variable parser that treats YAML strings within the config.yml as Jinja templates:
 ```yaml
 mail: my@email.de
 text: 'contact me at {{mail}}'

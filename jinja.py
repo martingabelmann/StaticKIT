@@ -3,7 +3,7 @@
 
 import os
 import codecs
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, Template
 from difflib import unified_diff
 from datetime import datetime
 
