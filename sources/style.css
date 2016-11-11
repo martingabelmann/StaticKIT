@@ -2504,7 +2504,11 @@ div#suchen input#submit {
         width: 74.868% !important;
     }
     div#right-row {
-        display: none;
+        position: absolute;
+        top: 100%;
+        background-color: #e5e5e5;
+        padding-top: 10px;
+        width: 100%;
     }
     .infobox {
         float:left;
@@ -2517,8 +2521,7 @@ div#suchen input#submit {
         padding-top: 5px;
     }
     div#footer-container {
-        width: 100%;
-        background: none;
+        display: none;
     }
     div#footer {
         width: 98%;
@@ -2848,7 +2851,11 @@ div#suchen input#submit {
         width: 72.5% !important;
     }
     div#right-row {
-        display: none;
+        position: absolute;
+        top: 100%;
+        background-color: #e5e5e5;
+        padding-top: 10px;
+        width: 100%;
     }
     .infobox {
         float:left;
@@ -2861,8 +2868,7 @@ div#suchen input#submit {
         padding-top: 5px;
     }
     div#footer-container {
-        width: 100%;
-        background: none;
+        display: none;
     }
     div#footer {
         width: 98%;
@@ -3078,7 +3084,11 @@ div#suchen input#submit {
         float:left !important;
     }
     #right-row {
-        display: none !important;
+        position: absolute;
+        top: 100%;
+        background-color: #e5e5e5;
+        padding-top: 10px;
+        width: 100%;
     }
     #print_infobox {
         display: block !important;
