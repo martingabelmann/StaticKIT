@@ -5,11 +5,11 @@
 * for every page/template that makes use of variables/jinja2 syntax create a ``.html`` file at ``~/.private_html/pages/`` and fill it with your (html or markdown) content,
 * every page that should be shown in the navigation needs an entry in the ``~/.private_html/config.yml``, the syntax is as follows: 
   
-  ```yaml
+  ```
    navigation:
-        - file: filename (without html extension)
-          title: filetitle (the name shown in the navigation)
-          order: 1  (the position of the page in the navigation)
+        - file: filename     # (without html extension)
+          title: filetitle   # (the name shown in the navigation)
+          order: 1           # (the position of the page in the navigation)
   ```
   
 * run ``publish --input ~/.private_html --output ~/.public_html``
