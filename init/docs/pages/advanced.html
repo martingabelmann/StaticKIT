@@ -2,7 +2,7 @@
 # Documentation
 ## Infobox
 You can add additional infoboxes on the right side of the page. Fill the ``infobox`` dict with appropriate informations, every new subdict (starting with a ``-``) marks a new infobox:
-```yaml
+```
 infobox:
     - title: Info-Box
       text: "A simple list
@@ -24,7 +24,7 @@ Loading page content from specific files under ``/pages/*.html`` is triggered by
 ## Recycling variables
 People using ansible (which mixes yaml and jinja2) may be confused, because standalone YAML does not come with a feature to substitute variables/strings.
 However, we introduced a simple variable parser that treats YAML strings within the config.yml as Jinja templates:
-```yaml
+```
 mail: "my@email.de"
 text: "contact me at {{'{{'}}mail{{'}}'}}"
 ```
@@ -50,4 +50,14 @@ Sometimes it is useful to have other files as an template, too (e.g. for an .hta
 
 ## copying static files with publish
 Binaries and non-template files could in general directly placed into ``~/.public_html`` without informing ``publish`` about it. However, one might want to organize its template files within a version control system and/or want the whole webpage (including binarie content e.g. pdf downloads) reproduced by executing ``publish -o ~/.public_html`` while ~/.public_html is empty.
+
+## Syntax Highlighting
+When publishing snippets of code or quoting long text it is useful to have syntax highlighting. This is done using [highlightjs](https://highlightjs.org/). In Markdown you can either have code blocks within three single quotes or inline code within double single quotes:
+```
+'''
+Your code block here  
+'''
+or '' inline code '' there.
+```
+Within normal HTML the corresponds are <code>&lt;pre&gt;&lt;code&gt;</code>  and <code>&lt;code&gt;</code> blocks.
 </div>

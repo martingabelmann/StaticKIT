@@ -50,5 +50,5 @@ class template:
                     print("created: " + fileout)
 
             if mode == "w":
-                f = codecs.open(fileout, mode, encoding='utf-8')
+                f = codecs.open(fileout, mode, encoding='utf-8',  errors='ignore')
                 f.write(content)

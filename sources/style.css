@@ -318,6 +318,12 @@ div#container {
     border-left:2px #fff solid;
     width:979px;
 }
+/* inline syntax highlighting */
+p > code.hljs { 
+    display: inline; 
+    padding: 0em 0.5em 0em 0.5em !important;
+}
+
 /* Linke Spalte */
 div#left-row {
     float:left;
@@ -567,12 +573,6 @@ div.text pre, div.text pre * {
     font-size: 11px;
     color: #000000;
 }
-div.text code, div.text code * {
-    font-family: monospace;
-    font-size: 12px;
-    color: #000000;
-}
-
 div.firstline {
     color:#000000;
     line-height:1.45em;
