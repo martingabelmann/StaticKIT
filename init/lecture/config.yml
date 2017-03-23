@@ -1,11 +1,12 @@
 ---
 
-title: Lecture example
 mail: max.mustermann@kit.edu
 
+# the startpage.title will serve 
+# as prefix for all other pages
 startpage:
     file: start
-    title: "{{title}}"
+    title: "Lecture example"
 
 headernavigation:
     - title: HOME

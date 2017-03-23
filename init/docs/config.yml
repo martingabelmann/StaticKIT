@@ -1,11 +1,10 @@
 ---
 
-title: StaticKIT
-
 repo: https://github.com/particleKIT/StaticKIT
 
 startpage:
     file: start
+    title: StaticKIT
 
 headernavigation:
     - title: HOME
