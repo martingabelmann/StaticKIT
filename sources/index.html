@@ -24,7 +24,9 @@ converter.setOption('parseImgDimensions', true);
 
 var pages = {}
 {% for page in navigation %}
+{% if page.file %}
 pages['{{page.file}}']= '{{page.title}}';
+{% endif %}
 {% endfor %}
 
 
@@ -114,7 +116,11 @@ $(document).ready(function(){
                     <div id="menu-box">
 <ul>
     {% for entry in navigation|sort(attribute='order') %}
+    {% if entry.file %}
     <li class="li_level_1_not_selected" id="li_{{entry.file}}"><a class="level_1_not_selected" href="#{{entry.file}}">{{entry.title}}</a></li>
+    {% elif entry.href %}
+    <li class="li_level_1_not_selected" id="li_{{entry.title}}"><a class="level_1_not_selected" href="{{entry.href}}">{{entry.title}}</a></li>
+    {% endif %}
     {% endfor %}
 </ul><br/> 
 </div>
