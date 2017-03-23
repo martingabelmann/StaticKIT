@@ -3,6 +3,7 @@
 
 import os
 import codecs
+import fnmatch
 from jinja2 import Environment, FileSystemLoader, Template
 from difflib import unified_diff
 from datetime import datetime
@@ -36,6 +37,8 @@ class template:
             if not os.path.isdir(fileout):
                 os.makedirs(fileout)
             for file in os.listdir(filein):
+                if fnmatch.fnmatch(file, '*~'): continue
+                if fnmatch.fnmatch(file, '.*.sw?'): continue
                 next_fileout = fileout + '/' + file
                 next_filein  = filein + '/'  + file
                 self.save(next_filein, next_fileout, mode, diff)
