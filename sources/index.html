@@ -54,7 +54,9 @@ function openPage(file) {
             if(pages.hasOwnProperty(file)) {
                 resetNavigation();
                 setNavigation('#li_' + file);
-                document.title = pages[file];
+                document.title = '{{startpage.title}}'+' - '+pages[file];
+            } else {
+                document.title = '{{startpage.title}}';
             }
 
             $(".markdown").each(function() {
